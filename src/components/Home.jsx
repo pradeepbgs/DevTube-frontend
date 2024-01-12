@@ -1,11 +1,14 @@
-import React from 'react'
+import React from 'react';
+import VideoContainer from './videoComponents/VideoContainer';
 
 const Home = () => {
+  
+
   return (
     <div className=''>
-      this is home page. videos not 
+      <VideoContainer/>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
