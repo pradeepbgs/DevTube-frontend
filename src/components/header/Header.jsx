@@ -1,15 +1,21 @@
 import React from 'react';
 import { FaBars, FaSearch } from 'react-icons/fa'; // Import the hamburger icon
 import { useDispatch } from 'react-redux';
-import { Link , NavLink} from 'react-router-dom'; 
+import { Link , NavLink, useNavigate} from 'react-router-dom'; 
 import { toggleMenu } from '../../utils/toggleSlice';
 
 const Header = () => {
+  const navigate = useNavigate()
 
  const dispatch = useDispatch()
 
  const toggleMenuHandler = () => {
   dispatch(toggleMenu())
+ }
+
+ const formHandler = (e) => {
+  e.preventDefault()
+  navigate('/results')
  }
 
   return (
@@ -28,7 +34,9 @@ const Header = () => {
                 </button>
             </div>
             <div>
-              <form action="" className='flex items-center'>
+              <form 
+              onSubmit={formHandler}
+              className='flex items-center'>
                 <label className='border border-gray-500 px-2 py-3 border-r-0'
                 htmlFor=""><FaSearch/></label>
                 <input 
@@ -45,12 +53,16 @@ const Header = () => {
               </form>
             </div>
             <div className='flex items-center'>
-              <button className='mr-3 bg-black hover:bg-gray-700 px-3 py-2 rounded-full focus:outline-none'>
+              <button 
+              onClick={() =>{dispatch(toggleMenu())}}
+              className='mr-3 bg-black hover:bg-gray-700 px-3 py-2 rounded-full focus:outline-none'>
                 <Link to='/login'>
                 Login
                 </Link>
               </button>
-              <button className='bg-purple-500 hover:bg-purple-700 px-3 py-2 rounded-full focus:outline-none'>
+              <button 
+              onClick={() =>{dispatch(toggleMenu())}}
+              className='bg-purple-500 hover:bg-purple-700 px-3 py-2 rounded-full focus:outline-none'>
               <Link to='/signup'>
                 Signup
                 </Link>

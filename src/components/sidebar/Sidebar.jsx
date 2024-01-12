@@ -58,9 +58,11 @@ const Sidebar = () => {
     <div className={`'bg-black text-white h-full  flex-col hidden md:flex border border-y-0 border-l-0 '`}>
       <ul className='flex-grow px-2 py-3 '>
         {items.map((item, index) => (
-          <NavLink to={item.link} key={index}>
+          <NavLink 
+          className={({isActive}) => `${isActive? "text-purple-400" : "text-gray-200"}`}
+          to={item.link} key={index}>
           <li
-            className='py-2 px-5 hover:bg-gray-700 w-[100%] mb-4 cursor-pointer flex items-center border'
+            className='py-2 px-5 hover:bg-purple-400 hover:text-black w-[100%] mb-4 cursor-pointer flex items-center border'
           >
             {item.icon && <span className='mr-2'>{item.icon}</span>}
             {item.name}
@@ -69,10 +71,10 @@ const Sidebar = () => {
         ))}
       </ul>
       <ul className='px-2'>
-        <li className='py-2 px-4 hover:bg-gray-700 cursor-pointer flex items-center w-[15vw] mb-4 border'>
+        <li className='py-2 px-4 hover:bg-purple-400 hover:text-black  cursor-pointer flex items-center w-[15vw] mb-4 border'>
           <span className='mr-2'><IoIosHelpCircle /></span> Support
         </li>
-        <li className='py-2 px-4 hover:bg-gray-700 cursor-pointer flex items-center w-[15vw] mb-4 border'>
+        <li className='py-2 px-4 hover:bg-purple-400 hover:text-black  cursor-pointer flex items-center w-[15vw] mb-4 border'>
           <span className='mr-2'><IoIosSettings /></span> Setting
         </li>
       </ul>
