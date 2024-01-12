@@ -3,12 +3,16 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import {  RouterProvider, createBrowserRouter} from 'react-router-dom'
-import Home from './components/Home.jsx'
-import Login from './components/Authentication/Login.jsx'
 import { Provider } from 'react-redux'
 import store from './utils/Store.js'
-import VideoListings from './components/videoListings/VideoListings.jsx'
-import Signup from './components/Authentication/Signup.jsx'
+import {
+  Home,
+  Login,
+  Signup,
+  LikedVideo,
+  VideoListings,
+  History,
+} from './components/index.js'
 
 const router  = createBrowserRouter([
       {
@@ -28,11 +32,16 @@ const router  = createBrowserRouter([
             element: <Signup/>
           },
           {
-            path: '/likde-videos',
+            path: '/liked-videos',
+            element: <LikedVideo/>
           },
           {
             path: '/results',
             element: <VideoListings/>
+          },
+          {
+            path: '/history',
+            element:<History/>
           }
         ]
       }
