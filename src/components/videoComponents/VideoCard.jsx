@@ -1,15 +1,14 @@
 import React from 'react'
 
 const VideoCard = ({
-    index,
-    video
+  video
 }) => {
 
     
 
   return (
     <div>
-      <div  className='text-white md:w-[25vw] w-[90vw] rounded ml-5 mb-3 mt-2 '>
+      <div  className='text-white md:w-[25vw] w-[90vw] rounded ml-5 mb-3 mt-2'>
             <img 
             src={video.thumbnail} 
             alt={`Thumbnail for ${video.title}`} 
