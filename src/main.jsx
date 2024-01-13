@@ -12,6 +12,7 @@ import {
   LikedVideo,
   VideoListings,
   History,
+  Watchpage,
 } from './components/index.js'
 
 const router  = createBrowserRouter([
@@ -42,6 +43,10 @@ const router  = createBrowserRouter([
           {
             path: '/history',
             element:<History/>
+          },
+          {
+            path: "/watchpage",
+            element: <Watchpage/>
           }
         ]
       }

@@ -1,6 +1,7 @@
 import React from 'react'
 import VideoCard from './VideoCard';
-
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 const VideoContainer = () => {
 
     const videos = [
@@ -127,12 +128,14 @@ const VideoContainer = () => {
         // Repeat the pattern for more videos...
       ];
 
+
+
   return (
     <div className='overflow-hidden mt-5'>
       <div className='flex flex-wrap md:ml-2'>
         {videos?.map((video, index) => (
           <div className='' key={index}>
-          <VideoCard index={index} video={video} />
+          <Link to={`watchpage?${index}`}><VideoCard index={index} video={video} /></Link>
           </div>
         ))}
       </div>

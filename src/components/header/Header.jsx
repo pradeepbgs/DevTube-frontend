@@ -54,14 +54,14 @@ const Header = () => {
             </div>
             <div className='flex items-center'>
               <button 
-              onClick={() =>{dispatch(toggleMenu())}}
+              // onClick={() =>{dispatch(toggleMenu())}}
               className='mr-3 bg-black hover:bg-gray-700 px-3 py-2 rounded-full focus:outline-none'>
                 <Link to='/login'>
                 Login
                 </Link>
               </button>
               <button 
-              onClick={() =>{dispatch(toggleMenu())}}
+              // onClick={() =>{dispatch(toggleMenu())}}
               className='bg-purple-500 hover:bg-purple-700 px-3 py-2 rounded-full focus:outline-none'>
               <Link to='/signup'>
                 Signup

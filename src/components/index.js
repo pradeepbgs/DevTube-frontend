@@ -8,7 +8,7 @@ import Header from "./header/Header";
 import VideoCard from "./videoComponents/VideoCard";
 import VideoContainer from "./videoComponents/VideoContainer";
 import VideoListings from "./videoListings/VideoListings";
-
+import Watchpage from "./watchpage/Watchpage";
 
 
 
@@ -24,4 +24,5 @@ export {
     VideoCard,
     VideoContainer,
     VideoListings,
+    Watchpage
 };
