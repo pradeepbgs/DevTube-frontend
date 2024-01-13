@@ -9,7 +9,7 @@ import VideoCard from "./videoComponents/VideoCard";
 import VideoContainer from "./videoComponents/VideoContainer";
 import VideoListings from "./videoListings/VideoListings";
 import Watchpage from "./watchpage/Watchpage";
-
+import ChannelDeatilsPage from "./pages/channelDeatilsPage";
 
 
 
@@ -24,5 +24,6 @@ export {
     VideoCard,
     VideoContainer,
     VideoListings,
-    Watchpage
+    Watchpage,
+    ChannelDeatilsPage,
 };

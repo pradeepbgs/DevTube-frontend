@@ -13,6 +13,7 @@ import {
   VideoListings,
   History,
   Watchpage,
+  ChannelDeatilsPage
 } from './components/index.js'
 
 const router  = createBrowserRouter([
@@ -47,6 +48,10 @@ const router  = createBrowserRouter([
           {
             path: "/watchpage",
             element: <Watchpage/>
+          },
+          {
+            path: "/channel-details",
+            element: <ChannelDeatilsPage/>,
           }
         ]
       }
