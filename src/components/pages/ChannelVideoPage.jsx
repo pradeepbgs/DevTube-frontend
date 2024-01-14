@@ -1,5 +1,7 @@
 import React , {useState} from 'react'
 import VideoCard from '../videoComponents/VideoCard'
+import { FaVideo } from 'react-icons/fa';
+
 
 const ChannelVideoPage = () => {
     const [isTr, setIstr] = useState(false)
@@ -138,8 +140,13 @@ const ChannelVideoPage = () => {
             ))
         }
     </div>
-  ) : <h1 className='mt-10'>No videos uploaded
-  This page has yet to upload a video. Search another page in order to find more videos.</h1>
+  ) : <div className='flex flex-col items-center mt-5'>
+        <FaVideo
+        className='text-4xl'
+        />
+        <h1 className='font-bold text-2xl'>No Videos Uploaded</h1>
+        <p className='w-[70%] mt-3 font-semibold'>This page has yet to upload a video. Search another page in order to find more videos.</p>
+      </div>
 }
 
 export default ChannelVideoPage
