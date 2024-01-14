@@ -10,7 +10,10 @@ import VideoContainer from "./videoComponents/VideoContainer";
 import VideoListings from "./videoListings/VideoListings";
 import Watchpage from "./watchpage/Watchpage";
 import ChannelDeatilsPage from "./pages/channelDeatilsPage";
-
+import ChannelPlayList from "./pages/ChannelPlayList";
+import ChannelVideoPage from "./pages/ChannelVideoPage";
+import ChannelTweets from  './pages/channelTweets'
+import ChannelSubscribedPage from "./pages/ChannelSubscribedPage";
 
 
 export { 
@@ -26,4 +29,8 @@ export {
     VideoListings,
     Watchpage,
     ChannelDeatilsPage,
+    ChannelPlayList,
+    ChannelVideoPage,
+    ChannelTweets,
+    ChannelSubscribedPage
 };

@@ -13,8 +13,13 @@ import {
   VideoListings,
   History,
   Watchpage,
-  ChannelDeatilsPage
+  ChannelDeatilsPage,
+  ChannelVideoPage,
+  ChannelPlayList,
+  ChannelTweets,
+  ChannelSubscribedPage
 } from './components/index.js'
+
 
 const router  = createBrowserRouter([
       {
@@ -50,8 +55,26 @@ const router  = createBrowserRouter([
             element: <Watchpage/>
           },
           {
-            path: "/channel-details",
+            path: "/channel",
             element: <ChannelDeatilsPage/>,
+            children: [
+              {
+                path: "/channel",
+                element: <ChannelVideoPage/>,
+              },
+              {
+                path: "/channel/playlist",
+                element: <ChannelPlayList/>
+              },
+              {
+                path: "/channel/subscribed",
+                element: <ChannelSubscribedPage/>
+              },
+              {
+                path: "/channel/tweets",
+                element: <ChannelTweets/>,
+              }
+            ]
           }
         ]
       }
