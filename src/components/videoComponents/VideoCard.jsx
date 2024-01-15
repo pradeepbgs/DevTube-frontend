@@ -12,7 +12,7 @@ const VideoCard = ({
             <img 
             src={video.thumbnail} 
             alt={`Thumbnail for ${video.title}`} 
-            className='w-full h-30 object-cover mb-2 rounded-md' />
+            className='w-full h-[14vw] object-cover mb-2 rounded-md' />
             <div className='flex'>
               <img className='w-9 h-9 bg-gray-100 rounded-full'
               src="https://w7.pngwing.com/pngs/178/595/png-transparent-user-profile-computer-icons-login-user-avatars-thumbnail.png" alt="" />

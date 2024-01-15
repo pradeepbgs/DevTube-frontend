@@ -7,7 +7,7 @@ const VideoContainer = () => {
     const videos = [
         {
           title: 'Video 1',
-          thumbnail: 'https://via.placeholder.com/320x180',
+          thumbnail: 'https://images.pexels.com/photos/1144260/pexels-photo-1144260.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
           views: 1000,
           duration: '5:30',
         },

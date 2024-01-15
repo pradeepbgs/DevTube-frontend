@@ -19,6 +19,8 @@ import {
   ChannelTweets,
   ChannelSubscribedPage
 } from './components/index.js'
+import ChannelPlaylistVideo from './components/pages/ChannelPlaylistVideo.jsx'
+import VideoListingPage from './components/videoListings/VideoListingPage.jsx'
 
 
 const router  = createBrowserRouter([
@@ -44,7 +46,7 @@ const router  = createBrowserRouter([
           },
           {
             path: '/results',
-            element: <VideoListings/>
+            element: <VideoListingPage/>
           },
           {
             path: '/history',
@@ -64,8 +66,10 @@ const router  = createBrowserRouter([
               },
               {
                 path: "/channel/playlist",
-                element: <ChannelPlayList/>
+                element: <ChannelPlayList/>,
+                
               },
+             
               {
                 path: "/channel/subscribed",
                 element: <ChannelSubscribedPage/>
@@ -75,7 +79,11 @@ const router  = createBrowserRouter([
                 element: <ChannelTweets/>,
               }
             ]
-          }
+          },
+          {
+            path: "/channel/playlist/list/",
+            element: <ChannelPlaylistVideo/>,
+          },
         ]
       }
 ])  

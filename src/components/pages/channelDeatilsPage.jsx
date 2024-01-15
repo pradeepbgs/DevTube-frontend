@@ -12,7 +12,7 @@ const ChannelDetailsPage = () => {
     <div className='w-full h-full text-white'>
       <div className='border border-l-0 border-r-0 border-t-0'>
      <div className=''>
-      <nav className='flex justify-center  w-full h-full'>
+      <nav className='flex justify-center  w-full h-full '>
         <ul className='fixed flex justify-between border border-dotted bg-gray-700 rounded-sm px-5 py-3 mt-2'>
           <NavLink
           to={'/channel'}
