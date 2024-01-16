@@ -12,7 +12,7 @@ import Watchpage from "./watchpage/Watchpage";
 import ChannelDeatilsPage from "./pages/channelDeatilsPage";
 import ChannelPlayList from "./pages/ChannelPlayList";
 import ChannelVideoPage from "./pages/ChannelVideoPage";
-import ChannelTweets from  './pages/channelTweets'
+import ChannelTweets from  './pages/tweet/channelTweets'
 import ChannelSubscribedPage from "./pages/ChannelSubscribedPage";
 
 

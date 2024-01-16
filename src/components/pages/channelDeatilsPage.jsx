@@ -1,13 +1,8 @@
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-
-
-
 
 const ChannelDetailsPage = () => {
 
-
-  
   return (
     <div className='w-full h-full text-white'>
       <div className='border border-l-0 border-r-0 border-t-0'>

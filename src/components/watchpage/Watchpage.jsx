@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaThumbsUp, FaThumbsDown, FaSave, FaBell } from "react-icons/fa";
 import CommentPage from "./CommentPage";
 import { useDispatch, useSelector } from "react-redux";
-import { showDescription } from "../../utils/descriptionToggle";
+import { showDescription , toggleMenuFalse} from "../../utils/toggleSlice";
 import VideoListings from "../videoListings/VideoListings";
 const Watchpage = () => {
-  const isDescription = useSelector((state) => state.description.description);
+  const isDescription = useSelector((state) => state.toggle.description);
   const dispatch = useDispatch();
 
   const cmt = [
@@ -225,6 +225,10 @@ const Watchpage = () => {
     // Repeat the pattern for more videos...
   ];
 
+  useEffect(() => {
+    dispatch(toggleMenuFalse())
+  })
+
   return (
     <div className="text-white h-screen flex justify-between">
       <div className="w-[67%] px-2 py-3">
@@ -285,7 +289,7 @@ const Watchpage = () => {
               }}
               className="ml-2 border px-3"
             >
-              Show
+              {isDescription ? "Hide" : "Show"}
             </button>
             <p className="h-[10]">
               🚀 Dive into the world of React with our latest tutorial series:

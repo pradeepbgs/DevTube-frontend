@@ -9,15 +9,16 @@ const VideoListings = ({
   titleFont = "font-semibold",
   showVideoDescription = true,
   descriptionWidth = "w-[40vw]",
+  divBorder = "",
   video
 }) => {
 
 
   return (
-    <div className={`${mainDIvWidth}`}>
-        <div className="py-1">
+    <div className={`${mainDIvWidth} ${divBorder} mt-2`}>
+        <div className="py">
     
-        <div className="text-white ml-3 mt-4 flex" >
+        <div className="text-white ml-3 py-2 flex" >
           <div>
             <img 
             className={`${imgWidth} ${imgHeight}`}
