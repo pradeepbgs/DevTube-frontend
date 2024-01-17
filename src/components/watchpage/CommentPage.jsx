@@ -15,7 +15,7 @@ const CommentPage = ({
             </span>
                 <p className='ml-3 text-gray-300'>· {items.ago} minutes ago</p>
             </div>
-            <p className='mt-2 '>{items.comment}</p>
+            <p className='mt-2 '>{items.content}</p>
         </div>
     </div>
   )

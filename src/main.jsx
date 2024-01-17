@@ -53,7 +53,7 @@ const router  = createBrowserRouter([
             element:<History/>
           },
           {
-            path: "/watchpage",
+            path: "/watchpage/:videoId",
             element: <Watchpage/>
           },
           {

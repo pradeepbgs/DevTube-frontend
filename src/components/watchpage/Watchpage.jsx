@@ -1,241 +1,60 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaThumbsUp, FaThumbsDown, FaSave, FaBell } from "react-icons/fa";
 import CommentPage from "./CommentPage";
 import { useDispatch, useSelector } from "react-redux";
 import { showDescription , toggleMenuFalse} from "../../utils/toggleSlice";
 import VideoListings from "../videoListings/VideoListings";
+import { useParams } from "react-router-dom";
+import axios  from "axios";
+import {setVideo, setOwner, setSubscribers, isSubscribed, setComments, setLikes} from "../../utils/videoSlice";
+
 const Watchpage = () => {
+  const [video, setVideos] = useState([])
   const isDescription = useSelector((state) => state.toggle.description);
   const dispatch = useDispatch();
 
-  const cmt = [
-    {
-      username: "pradeep",
-      fullname: "Pradeep Sahu",
-      comment:
-        "This series is exactly what I've been looking for! Excited to dive into these advanced React patterns. Thanks for putting this together!",
-      ago: 4,
-    },
-    {
-      username: "pradeep",
-      fullname: "Pradeep Sahu",
-      comment:
-        "This series is exactly what I've been looking for! Excited to dive into these advanced React patterns. Thanks for putting this together!",
-      ago: 4,
-    },
-    {
-      username: "pradeep",
-      fullname: "Pradeep Sahu",
-      comment:
-        "This series is exactly what I've been looking for! Excited to dive into these advanced React patterns. Thanks for putting this together!",
-      ago: 4,
-    },
-    {
-      username: "pradeep",
-      fullname: "Pradeep Sahu",
-      comment:
-        "This series is exactly what I've been looking for! Excited to dive into these advanced React patterns. Thanks for putting this together!",
-      ago: 4,
-    },
-    {
-      username: "pradeep",
-      fullname: "Pradeep Sahu",
-      comment:
-        "This series is exactly what I've been looking for! Excited to dive into these advanced React patterns. Thanks for putting this together!",
-      ago: 4,
-    },
-    {
-      username: "pradeep",
-      fullname: "Pradeep Sahu",
-      comment:
-        "This series is exactly what I've been looking for! Excited to dive into these advanced React patterns. Thanks for putting this together!",
-      ago: 4,
-    },
-    {
-      username: "pradeep",
-      fullname: "Pradeep Sahu",
-      comment:
-        "This series is exactly what I've been looking for! Excited to dive into these advanced React patterns. Thanks for putting this together!",
-      ago: 4,
-    },
-    {
-      username: "pradeep",
-      fullname: "Pradeep Sahu",
-      comment:
-        "This series is exactly what I've been looking for! Excited to dive into these advanced React patterns. Thanks for putting this together!",
-      ago: 4,
-    },
-    {
-      username: "pradeep",
-      fullname: "Pradeep Sahu",
-      comment:
-        "This series is exactly what I've been looking for! Excited to dive into these advanced React patterns. Thanks for putting this together!",
-      ago: 4,
-    },
-    {
-      username: "pradeep",
-      fullname: "Pradeep Sahu",
-      comment:
-        "This series is exactly what I've been looking for! Excited to dive into these advanced React patterns. Thanks for putting this together!",
-      ago: 4,
-    },
-  ];
+  
+  const { videoId } = useParams();
 
-  const videos = [
-    {
-      title: "Video 1",
-      thumbnail:
-        "https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      views: 1000,
-      duration: "5:30",
-    },
-    {
-      title: "Video 2",
-      thumbnail:
-        "https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      views: 1500,
-      duration: "8:45",
-    },
-    {
-      title: "Video 3",
-      thumbnail:
-        "https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      views: 1200,
-      duration: "6:20",
-    },
-    {
-      title: "Video 4",
-      thumbnail:
-        "https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      views: 800,
-      duration: "4:15",
-    },
-    {
-      title: "Video 5",
-      thumbnail:
-        "https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      views: 2000,
-      duration: "10:00",
-    },
-    {
-      title: "Video 6",
-      thumbnail:
-        "https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      views: 3000,
-      duration: "12:30",
-    },
-    {
-      title: "Video 7",
-      thumbnail:
-        "https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      views: 1800,
-      duration: "9:45",
-    },
-    {
-      title: "Video 8",
-      thumbnail:
-        "https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      views: 2500,
-      duration: "11:20",
-    },
-    {
-      title: "Video 9",
-      thumbnail:
-        "https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      views: 900,
-      duration: "4:50",
-    },
-    {
-      title: "Video 10",
-      thumbnail:
-        "https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      views: 1600,
-      duration: "8:00",
-    },
-    {
-      title: "Video 1",
-      thumbnail:
-        "https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      views: 1000,
-      duration: "5:30",
-    },
-    {
-      title: "Video 2",
-      thumbnail:
-        "https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      views: 1500,
-      duration: "8:45",
-    },
-    {
-      title: "Video 3",
-      thumbnail:
-        "https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      views: 1200,
-      duration: "6:20",
-    },
-    {
-      title: "Video 4",
-      thumbnail:
-        "https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      views: 800,
-      duration: "4:15",
-    },
-    {
-      title: "Video 5",
-      thumbnail:
-        "https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      views: 2000,
-      duration: "10:00",
-    },
-    {
-      title: "Video 6",
-      thumbnail:
-        "https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      views: 3000,
-      duration: "12:30",
-    },
-    {
-      title: "Video 7",
-      thumbnail:
-        "https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      views: 1800,
-      duration: "9:45",
-    },
-    {
-      title: "Video 8",
-      thumbnail:
-        "https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      views: 2500,
-      duration: "11:20",
-    },
-    {
-      title: "Video 9",
-      thumbnail:
-        "https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      views: 900,
-      duration: "4:50",
-    },
-    {
-      title: "Video 10",
-      thumbnail:
-        "https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      views: 1600,
-      duration: "8:00",
-    },
-    // Repeat the pattern for more videos...
-  ];
+  const getVideoDetails = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3000/api/v1/videos/${videoId}`, {withCredentials: true});
+  
+      if (response) {
+        console.log(response.data.data)
+        setVideos(response.data.data)
+        const video = response.data.data
+       
+        dispatch(setVideo({...video, owner: "", comments: ""}))
+        dispatch(setOwner(video.owner))
+        dispatch(setSubscribers(video.subscribersCount))  
+        dispatch(isSubscribed(video.isSubscribed))
+        dispatch(setComments(video.comments))
+        dispatch(setLikes(video.likesCount))
+      } 
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+    
+  }
 
   useEffect(() => {
     dispatch(toggleMenuFalse())
-  })
+    getVideoDetails()
+  },[])
+
+  console.log(video)
+
+  const { title, thumbnail, likesCount, owner, subscribersCount, description, comments } = video;
+
 
   return (
     <div className="text-white h-screen flex justify-between">
       <div className="w-[67%] px-2 py-3">
         <div className=" px-2">
           <img
-            className="rounded-sm "
-            src="https://plus.unsplash.com/premium_photo-1661943864527-d714736dfd16?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            className="rounded-sm h-[70vh] w-[60vw]"
+            src={thumbnail}
             alt=""
           />
         </div>
@@ -243,18 +62,18 @@ const Watchpage = () => {
           <div className="flex justify-between   ">
             <div className="w-[90%]">
               <h1 className="text-[1.3rem] font-semibold">
-                Building a RESTful API with Node.js and Express
+               {title}
               </h1>
               <p>30,164 Views · 18 hours ago</p>
             </div>
             <div className="py-2 flex h-[30%]">
               <button className="px-4 py-2 border border-gray-400 flex items-center hover:bg-gray-900">
-                <p className="mr-2">34k</p>
+                <p className="mr-2">{likesCount}</p>
                 <FaThumbsUp />
               </button>
               <button className="px-4 py-2 border border-gray-400 ml-2 flex items-center hover:bg-gray-900">
                 <FaThumbsDown />
-                <p className="ml-2">34k</p>
+                <p className="ml-2"></p>
               </button>
               <button className="px-4 py-2 border border-gray-400 ml-2 flex items-center hover:bg-gray-900">
                 <FaSave />
@@ -266,11 +85,11 @@ const Watchpage = () => {
             <div className="flex items-center">
               <img
                 className="w-10 h-10 rounded-full"
-                src="https://plus.unsplash.com/premium_photo-1661943864527-d714736dfd16?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                src={`${video?.owner?.avatar}`}
               />
               <div className="ml-3">
-                <p className="font-semibold">username</p>
-                <p className="text-gray-300">200k subscribers</p>
+                <p className="font-semibold">{owner?.fullname}</p>
+                <p className="text-gray-300">{subscribersCount} subscribers</p>
               </div>
             </div>
             <button className="flex items-center bg-gray-100 hover:bg-gray-300 text-black px-2 rounded-full">
@@ -292,10 +111,7 @@ const Watchpage = () => {
               {isDescription ? "Hide" : "Show"}
             </button>
             <p className="h-[10]">
-              🚀 Dive into the world of React with our latest tutorial series:
-              "Advanced React Patterns"! 🛠️ Whether you're a seasoned developer
-              or just starting out, this series is designed to elevate your
-              React skills to the next level.
+              {description ? description : "No description"}
             </p>
           </div>
         </div>
@@ -312,15 +128,15 @@ const Watchpage = () => {
             </button>
           </form>
           <div className="">
-            {cmt.map((item, index) => (
+            {comments?.map((item, index) => (
               <CommentPage key={index} items={item} />
             ))}
           </div>
         </div>
       </div>
       <div className="w-[40%]">
-        {videos.map((video, index) => (
-          <div key={index}>
+        {/* {video.map((video, index) => ( */}
+          {/* <div key={index}> */}
             <VideoListings
               imgWidth="w-[14vw]"
               titleFont="font-semibold"
@@ -331,8 +147,8 @@ const Watchpage = () => {
               showVideoDescription={false}
               video={video}
             />
-          </div>
-        ))}
+          {/* </div> */}
+        {/* ))} */}
       </div>
     </div>
   );
