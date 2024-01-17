@@ -1,51 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { FaThumbsUp, FaThumbsDown, FaSave, FaBell } from "react-icons/fa";
 import CommentPage from "./CommentPage";
-import { useDispatch, useSelector } from "react-redux";
+import {useSelector } from "react-redux";
 import { showDescription , toggleMenuFalse} from "../../utils/toggleSlice";
 import VideoListings from "../videoListings/VideoListings";
+import  useVideoDetails  from "../../useHooks/usevideoDetails";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import axios  from "axios";
-import {setVideo, setOwner, setSubscribers, isSubscribed, setComments, setLikes} from "../../utils/videoSlice";
+
 
 const Watchpage = () => {
-  const [video, setVideos] = useState([])
-  const isDescription = useSelector((state) => state.toggle.description);
-  const dispatch = useDispatch();
-
-  
+  const dispatch = useDispatch()
   const { videoId } = useParams();
-
-  const getVideoDetails = async () => {
-    try {
-      const response = await axios.get(`http://localhost:3000/api/v1/videos/${videoId}`, {withCredentials: true});
+  const isDescription = useSelector((state) => state.toggle.description);
+  const {video, comments,likes, owner, subscribers, areYouSubscribed} = useSelector(state => state.video)
   
-      if (response) {
-        console.log(response.data.data)
-        setVideos(response.data.data)
-        const video = response.data.data
-       
-        dispatch(setVideo({...video, owner: "", comments: ""}))
-        dispatch(setOwner(video.owner))
-        dispatch(setSubscribers(video.subscribersCount))  
-        dispatch(isSubscribed(video.isSubscribed))
-        dispatch(setComments(video.comments))
-        dispatch(setLikes(video.likesCount))
-      } 
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-    
-  }
+
+  const { getVideoDetails } = useVideoDetails(videoId);
 
   useEffect(() => {
-    dispatch(toggleMenuFalse())
-    getVideoDetails()
-  },[])
-
-  console.log(video)
-
-  const { title, thumbnail, likesCount, owner, subscribersCount, description, comments } = video;
+    dispatch(toggleMenuFalse());
+    getVideoDetails();
+  }, []);
+  
 
 
   return (
@@ -53,8 +30,8 @@ const Watchpage = () => {
       <div className="w-[67%] px-2 py-3">
         <div className=" px-2">
           <img
-            className="rounded-sm h-[70vh] w-[60vw]"
-            src={thumbnail}
+            className="rounded-sm h-[34vw] w-[100%]"
+            src={video?.thumbnail}
             alt=""
           />
         </div>
@@ -62,13 +39,13 @@ const Watchpage = () => {
           <div className="flex justify-between   ">
             <div className="w-[90%]">
               <h1 className="text-[1.3rem] font-semibold">
-               {title}
+               {video?.title}
               </h1>
               <p>30,164 Views · 18 hours ago</p>
             </div>
             <div className="py-2 flex h-[30%]">
               <button className="px-4 py-2 border border-gray-400 flex items-center hover:bg-gray-900">
-                <p className="mr-2">{likesCount}</p>
+                <p className="mr-2">{likes}</p>
                 <FaThumbsUp />
               </button>
               <button className="px-4 py-2 border border-gray-400 ml-2 flex items-center hover:bg-gray-900">
@@ -85,15 +62,15 @@ const Watchpage = () => {
             <div className="flex items-center">
               <img
                 className="w-10 h-10 rounded-full"
-                src={`${video?.owner?.avatar}`}
+                src={`${owner?.avatar}`}
               />
               <div className="ml-3">
                 <p className="font-semibold">{owner?.fullname}</p>
-                <p className="text-gray-300">{subscribersCount} subscribers</p>
+                <p className="text-gray-300">{subscribers} subscribers</p>
               </div>
             </div>
             <button className="flex items-center bg-gray-100 hover:bg-gray-300 text-black px-2 rounded-full">
-              <p className="mr-3 font-semibold">Subscribe</p>
+              <p className="mr-3 font-semibold">{areYouSubscribed ? "subscribed" : "subscribe" }</p>
               <FaBell />
             </button>
           </div>
@@ -111,7 +88,7 @@ const Watchpage = () => {
               {isDescription ? "Hide" : "Show"}
             </button>
             <p className="h-[10]">
-              {description ? description : "No description"}
+              {video?.description ? video?.description : "No description"}
             </p>
           </div>
         </div>
@@ -135,20 +112,17 @@ const Watchpage = () => {
         </div>
       </div>
       <div className="w-[40%]">
-        {/* {video.map((video, index) => ( */}
-          {/* <div key={index}> */}
-            <VideoListings
+        // need more works on this listing page with backend and FE too
+            {/* <VideoListings
               imgWidth="w-[14vw]"
               titleFont="font-semibold"
               titleWidth="w-[20vw]"
               titleSize="text-[1.rem]"
               mainDIvWidth="0"
-              imgHeight="h-[15vh]"
+              imgHeight="h-[9vw]"
               showVideoDescription={false}
               video={video}
-            />
-          {/* </div> */}
-        {/* ))} */}
+            /> */}
       </div>
     </div>
   );

@@ -20,14 +20,12 @@ const VideoContainer = () => {
       const response = await axios.get("http://localhost:3000/api/v1/videos", {withCredentials: true});
   
       if (response) {
-        setVideos(response.data.data); 
+        setVideos(response?.data?.data); 
         setIsVideos(true);
-        console.log(response.data)
       } else {
         setIsVideos(false); 
       }
     } catch (error) {
-      console.error("Error fetching data:", error);
       setIsVideos(false); 
     }
   };
@@ -41,8 +39,6 @@ const VideoContainer = () => {
       data
     }
   },[]);
-
-  console.log(video)
 
   return isVideos ? (
     <div className="overflow-hidden mt-5">

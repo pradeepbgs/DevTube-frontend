@@ -1,27 +1,24 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react';
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import {  RouterProvider, createBrowserRouter} from 'react-router-dom'
 import { Provider } from 'react-redux'
 import store from './utils/Store.js'
-import {
-  Home,
-  Login,
-  Signup,
-  LikedVideo,
-  VideoListings,
-  History,
-  Watchpage,
-  ChannelDeatilsPage,
-  ChannelVideoPage,
-  ChannelPlayList,
-  ChannelTweets,
-  ChannelSubscribedPage
-} from './components/index.js'
-import ChannelPlaylistVideo from './components/pages/ChannelPlaylistVideo.jsx'
-import VideoListingPage from './components/videoListings/VideoListingPage.jsx'
-
+const Home = lazy(() => import('./components/Home.jsx'));
+const Login = lazy(() => import('./components/Authentication/Login.jsx'));
+const Signup = lazy(() => import('./components/Authentication/Signup.jsx'));
+const LikedVideo = lazy(() => import('./components/pages/LikedVideo.jsx'));
+const VideoListingPage = lazy(() => import('./components/videoListings/VideoListingPage.jsx'));
+const History = lazy(() => import('./components/pages/History.jsx'));
+const Watchpage = lazy(() => import('./components/watchpage/Watchpage.jsx'));
+const ChannelDeatilsPage = lazy(() => import('./components/pages/channelDeatilsPage.jsx'));
+const ChannelVideoPage = lazy(() => import('./components/pages/ChannelVideoPage.jsx'));
+const ChannelPlayList = lazy(() => import('./components/pages/ChannelPlayList.jsx'));
+const ChannelSubscribedPage = lazy(() => import('./components/pages/ChannelSubscribedPage.jsx'));
+const ChannelPlaylistVideo = lazy(() => import('./components/pages/ChannelPlaylistVideo'));
+const ChannelTweets = lazy(() => import('./components/pages/tweet/channelTweets.jsx'));
+import Loader from './components/Loader.jsx';
 
 const router  = createBrowserRouter([
       {
@@ -30,59 +27,111 @@ const router  = createBrowserRouter([
         children: [
           {
             path: '/',
-            element: <Home/>
+            element: (
+              <Suspense fallback={<Loader/>}>
+               <Home/>
+              </Suspense>
+            )
           },
           {
             path: '/login',
-            element: <Login/>
+            element: (
+              <Suspense fallback={<Loader/>}>
+                  <Login/>
+              </Suspense>
+            )
           },
           {
             path: '/signup',
-            element: <Signup/>
+            element: (
+              <Suspense fallback={<Loader/>}>
+                <Signup/>
+              </Suspense>
+            )
           },
           {
             path: '/liked-videos',
-            element: <LikedVideo/>
+            element: (
+              <Suspense fallback={<Loader/>}>
+                <LikedVideo/>
+              </Suspense>
+            )
           },
           {
             path: '/results',
-            element: <VideoListingPage/>
+            element: (
+              <Suspense fallback={<Loader/>}>
+                <VideoListingPage/>
+              </Suspense>
+            )
           },
           {
             path: '/history',
-            element:<History/>
+            element: (
+              <Suspense fallback={<Loader/>}>
+                <History/>
+              </Suspense>
+            )
           },
           {
             path: "/watchpage/:videoId",
-            element: <Watchpage/>
+            element: (
+              <Suspense fallback={<Loader/>}>
+                <Watchpage/>
+              </Suspense>
+            )
           },
           {
             path: "/channel",
-            element: <ChannelDeatilsPage/>,
+            element: (
+              <Suspense fallback={<Loader/>}>
+                <ChannelDeatilsPage/>
+              </Suspense>
+            ),
             children: [
               {
                 path: "/channel",
-                element: <ChannelVideoPage/>,
+                element: (
+                  <Suspense fallback={<Loader/>}>
+                    <ChannelVideoPage/>
+                  </Suspense>
+                )
               },
               {
                 path: "/channel/playlist",
-                element: <ChannelPlayList/>,
+                element: (
+                  <Suspense fallback={<Loader/>}>
+                    <ChannelPlayList/>
+                  </Suspense>
+                )
                 
               },
              
               {
                 path: "/channel/subscribed",
-                element: <ChannelSubscribedPage/>
+                element: (
+                  <Suspense fallback={<Loader/>}>
+                    <ChannelSubscribedPage/>
+                  </Suspense>
+                )
               },
               {
                 path: "/channel/tweets",
-                element: <ChannelTweets/>,
+                element: (
+                  <Suspense fallback={<Loader/>}>
+                    <ChannelTweets/>
+                  </Suspense>
+                )
               }
             ]
           },
           {
             path: "/channel/playlist/list/",
-            element: <ChannelPlaylistVideo/>,
+            element: (
+              <Suspense fallback={<Loader/>}>
+                <ChannelPlaylistVideo/>
+              </Suspense>
+            )
           },
         ]
       }

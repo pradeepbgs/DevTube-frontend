@@ -22,10 +22,10 @@ const VideoListings = ({
           <div>
             <img 
             className={`${imgWidth} ${imgHeight}`}
-            src={video.thumbnail} alt="" />
+            src={video?.thumbnail} alt="" />
           </div>
           <div className="ml-2 w-[37%]">
-            <h1 className={`${titleFont} ${titleWidth} ${titleSize}`}>JavaScript Fundamentals: Variables and Data Types</h1>
+            <h1 className={`${titleFont} ${titleWidth} ${titleSize}`}>{video?.title}</h1>
             <p className="mb-1">200k • views</p>
             <div className="flex items-center mb-2">
               <img
@@ -33,12 +33,11 @@ const VideoListings = ({
                 src="https://assets.stickpng.com/thumbs/585e4beacb11b227491c3399.png"
                 alt=""
               />
-              <p>Username</p>
+              <p>{video?.username}</p>
             </div>
             {showVideoDescription && <span className={``}>
               <p className={`${descriptionWidth}`}>
-              Learn the basics of JavaScript, including variables, data types,
-              and how to use them in your programs.
+              {video?.description}
               </p>
             </span>}
           </div>
