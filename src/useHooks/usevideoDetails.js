@@ -13,7 +13,6 @@ const useVideoDetails = (videoId) => {
 
       if (response) {
         const video = response.data.data;
-
         dispatch(setVideo({ ...video, owner: '', comments: '' }));
         dispatch(setOwner(video.owner));
         dispatch(setSubscribers(video.subscribersCount));
@@ -26,9 +25,9 @@ const useVideoDetails = (videoId) => {
     }
   };
 
-  useEffect(() => {
-    getVideoDetails();
-  }, [videoId]);
+  // useEffect(() => {
+  //   getVideoDetails();
+  // }, [videoId]);
 
   return { getVideoDetails }; // You can expose more functions or state if needed
 };

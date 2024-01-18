@@ -1,13 +1,15 @@
+import  axios  from 'axios';
 import React, { useEffect, useState } from "react";
 import { FaThumbsUp, FaThumbsDown, FaSave, FaBell } from "react-icons/fa";
 import CommentPage from "./CommentPage";
 import {useSelector } from "react-redux";
 import { showDescription , toggleMenuFalse} from "../../utils/toggleSlice";
+import {isSubscribed} from "../../utils/videoSlice";
 import VideoListings from "../videoListings/VideoListings";
 import  useVideoDetails  from "../../useHooks/usevideoDetails";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-
+import {toggleSubscribe} from '../../useHooks/subscribeToggle'
 
 const Watchpage = () => {
   const dispatch = useDispatch()
@@ -18,12 +20,20 @@ const Watchpage = () => {
 
   const { getVideoDetails } = useVideoDetails(videoId);
 
+  const channelId = owner?._id
+
+  const handleSubscribeToggle = async () => {
+    toggleSubscribe(channelId, dispatch)
+  };
+
   useEffect(() => {
     dispatch(toggleMenuFalse());
     getVideoDetails();
   }, []);
-  
 
+
+  
+// console.log(comments)
 
   return (
     <div className="text-white h-screen flex justify-between">
@@ -69,7 +79,9 @@ const Watchpage = () => {
                 <p className="text-gray-300">{subscribers} subscribers</p>
               </div>
             </div>
-            <button className="flex items-center bg-gray-100 hover:bg-gray-300 text-black px-2 rounded-full">
+            <button 
+            onClick={handleSubscribeToggle}
+            className="flex items-center bg-gray-100 hover:bg-gray-300 text-black px-2 rounded-full">
               <p className="mr-3 font-semibold">{areYouSubscribed ? "subscribed" : "subscribe" }</p>
               <FaBell />
             </button>

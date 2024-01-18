@@ -40,6 +40,8 @@ const VideoContainer = () => {
     }
   },[]);
 
+  console.log(video)
+
   return isVideos ? (
     <div className="overflow-hidden mt-5">
       <div className="flex flex-wrap md:ml-2">
