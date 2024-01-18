@@ -40,7 +40,6 @@ const VideoContainer = () => {
     }
   },[]);
 
-  console.log(video)
 
   return isVideos ? (
     <div className="overflow-hidden mt-5">

@@ -2,15 +2,17 @@ import React, { useEffect } from "react";
 import { FaBars, FaSearch } from "react-icons/fa"; // Import the hamburger icon
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { toggleMenu } from "../../utils/toggleSlice";
+import { toggleMenu, showUserIcon } from "../../utils/toggleSlice";
 import axios from "axios";
-import {logout} from '../../utils/authSlice'
+import { logout } from "../../utils/authSlice";
+import AboutUser from "./AboutUser";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { isLoggedIn, user } = useSelector((state) => state.auth);
+  const { userIcon } = useSelector((state) => state.toggle);
 
   const toggleMenuHandler = () => {
     dispatch(toggleMenu());
@@ -21,20 +23,9 @@ const Header = () => {
     navigate("/results");
   };
 
-  const logoutUser = async () => {
-    try {
-      await axios.post("http://localhost:3000/api/v1/users/logout", null, {
-        withCredentials: true,
-      });
-      dispatch(logout());
-      navigate("/");
-      localStorage.removeItem("user");
-    } catch (error) {
-      console.error("Error logging out:", error);
-    }
-  };
-
   useEffect(() => {}, [isLoggedIn]);
+
+  console.log(userIcon);
 
   return (
     <div className="w-full">
@@ -89,17 +80,29 @@ const Header = () => {
                   </button>
                 </div>
               ) : (
-                <button
-                  onClick={logoutUser}
-                  className="bg-purple-500 hover:bg-purple-700 px-3 py-2 rounded-full cursor-pointer"
+                <div
+                  onClick={() => {
+                    dispatch(showUserIcon());
+                  }}
                 >
-                  Logout
-                </button>
+                  <img
+                    className="w-[3vw] h-[3vw] rounded-full cursor-pointer"
+                    src={`${user?.avatar}`}
+                    alt=""
+                  />
+                </div>
               )}
             </div>
           </ul>
         </nav>
       </div>
+      {userIcon && isLoggedIn && (
+        <div
+          className="absolute top-3 right-24 transition-transform 1s"
+        >
+          <AboutUser user={user} />
+        </div>
+      )}
     </div>
   );
 };
