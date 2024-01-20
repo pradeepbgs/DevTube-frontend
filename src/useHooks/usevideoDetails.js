@@ -2,7 +2,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
-import { setVideo, setOwner, setSubscribers, isSubscribed, setComments, setLikes } from '../utils/videoSlice';
+import { setVideo, setOwner, setSubscribers, isSubscribed, setLikes , setComments} from '../utils/videoSlice';
 
 const useVideoDetails = (videoId) => {
   const dispatch = useDispatch();
@@ -17,7 +17,6 @@ const useVideoDetails = (videoId) => {
         dispatch(setOwner(video.owner));
         dispatch(setSubscribers(video.subscribersCount));
         dispatch(isSubscribed(video.isSubscribed));
-        dispatch(setComments(video.comments));
         dispatch(setLikes(video.likesCount));
       }
     } catch (error) {
@@ -25,11 +24,41 @@ const useVideoDetails = (videoId) => {
     }
   };
 
-  // useEffect(() => {
-  //   getVideoDetails();
-  // }, [videoId]);
 
-  return { getVideoDetails }; // You can expose more functions or state if needed
+  return { getVideoDetails }; 
 };
 
-export default useVideoDetails;
+
+
+const useVideoComments = async (videoId) => {
+  const dispatch = useDispatch();
+
+  const getVideoComments = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3000/api/v1/comments/${videoId}`, { withCredentials: true });
+      if (response) {
+        const comments = response.data.data;
+        console.log(comments)
+        dispatch(setComments(comments));
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
+  
+  return {getVideoComments}
+}
+
+
+
+
+
+
+
+
+
+
+export  {
+  useVideoDetails,
+  useVideoComments
+};

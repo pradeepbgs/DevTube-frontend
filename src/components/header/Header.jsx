@@ -25,7 +25,6 @@ const Header = () => {
 
   useEffect(() => {}, [isLoggedIn]);
 
-  console.log(userIcon);
 
   return (
     <div className="w-full">

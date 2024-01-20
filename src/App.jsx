@@ -3,6 +3,7 @@ import {Header,Sidebar} from './components/index'
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import {login} from './utils/authSlice'
+import userSlice from './utils/userSlice';
 
 function App() {
   const dispatch = useDispatch()
