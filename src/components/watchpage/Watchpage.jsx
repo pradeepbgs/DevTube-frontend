@@ -15,6 +15,7 @@ import { addComment } from "../../utils/userSlice";
 import VideoPlayer from "./VideoPlayer";
 
 const Watchpage = () => {
+  const [isloading, setIsLoading] = useState(false)
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const Watchpage = () => {
   const { video, comments, likes, owner, subscribers, areYouSubscribed } =
     useSelector((state) => state.video);
   const { user } = useSelector((state) => state.auth);
-  const { userComment } = useSelector((state) => state.user);
+  
 
   const { getVideoDetails } = useVideoDetails(videoId);
 
@@ -33,11 +34,6 @@ const Watchpage = () => {
     toggleSubscribe(channelId, dispatch);
   };
 
-  const handleCommentSubmit = async (e) => {
-    e.preventDefault();
-    useComment(userComment, videoId);
-    
-  };
 
   const handleVideoLoad = () => {
     setIsVideoLoaded(true);
@@ -49,7 +45,7 @@ const Watchpage = () => {
     }
     dispatch(toggleMenuFalse()); 
     handleVideoLoad()
-  }, []);
+  }, [isloading]);
 
 //  console.log(video?.videoFile)
 
@@ -121,32 +117,7 @@ const Watchpage = () => {
             </p>
           </div>
         </div>
-        <div className="border px-3 mt-5 ml-1 rounded-lg">
-          <p className="mt-3">573 Comments</p>
-          <form onSubmit={handleCommentSubmit} className="mt-3 mb-4 px-2 flex">
-            <img
-              className="w-8 h-8 rounded-full mr-4"
-              src={`${user?.avatar}`}
-              alt=""
-            />
-            <input
-              onChange={(e) => dispatch(addComment(e.target.value))}
-              className="w-[70%] border bg-transparent text-white py-1 px-5 mr-3"
-              type="text"
-              name="content"
-              placeholder="Add a Comment"
-            />
-            <button
-              type="submit"
-              className="border px-4 py-1 ml-4 font-semibold hover:bg-gray-800"
-            >
-              Add
-            </button>
-          </form>
-          <div className="">
-              <CommentPage videoId={videoId}/>
-          </div>
-        </div>
+        <CommentPage/>
       </div>
       <div className="w-[40%]">
         // need more works on this listing page with backend and FE too
