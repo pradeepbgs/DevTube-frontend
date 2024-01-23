@@ -18,7 +18,7 @@ const CommentPage = () => {
 
   const user = useSelector((state) => state.auth.user);
   const { comments } = useSelector((state) => state.video);
-  const { userComment } = useSelector((state) => state.user);
+
 
   const getVideoComments = async () => {
     try {
@@ -37,9 +37,10 @@ const CommentPage = () => {
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
-    const res = useComment(userComment, videoId);
+    const res = useComment(isComment, videoId);
     if (res) {
       setIsLoading((prev) => !prev);
+      setIsComment("");
     }
   };
 
@@ -52,6 +53,7 @@ const CommentPage = () => {
 
       if (res) {
         setIsLoading((prev) => !prev);
+        setIsBtn(false);
       }
     } else {
       alert("this is not your comment so you cant delete  it");
@@ -90,7 +92,8 @@ const CommentPage = () => {
               alt=""
             />
             <input
-              onChange={(e) => dispatch(addComment(e.target.value))}
+              onChange={(e) => setIsComment(e.target.value)}
+              value={isComment}
               className="w-[70%] border bg-transparent text-white py-1 px-5 mr-3"
               type="text"
               name="content"
@@ -129,11 +132,11 @@ const CommentPage = () => {
                   </div>
                   <div className="mt-2">
                     <input
-                value={isUpdatable ? isComment : items?.content}
-                disabled={!isUpdatable}
-                onChange={(e) => setIsComment(e.target.value)}
-                className="mt-2 bg-transparent "
-              />
+                      value={isUpdatable ? isComment : items?.content}
+                      disabled={!isUpdatable}
+                      onChange={(e) => setIsComment(e.target.value)}
+                      className="mt-2 bg-transparent "
+                    />
                     {/* <p>{items?.content}</p> */}
                   </div>
                 </div>
@@ -143,9 +146,9 @@ const CommentPage = () => {
                   <div className=" h-fit w-fit mr-5 flex">
                     {isBtn && !isUpdatable && (
                       <>
-                        <button 
-                        onClick={() => setIsUpdatable(true)}
-                        className="bg-green-500 px-3">edit</button>
+                        <button
+                          onClick={() => setIsUpdatable(true)}
+                          className="bg-green-500 px-3">edit</button>
                         <button
                           className="bg-red-500 px-3 ml-2"
                           onClick={() => handleDeleteComment(items)}
@@ -156,12 +159,12 @@ const CommentPage = () => {
                     )}
                   </div>
                 )}
-                <div
+                {user?._id === items?.owner?._id && <div
                   className="cursor-pointer"
                   onClick={() => setIsBtn((prev) => !prev)}
                 >
                   <MdMoreVert />
-                </div>
+                </div>}
               </div>
             </div>
           ))}

@@ -83,6 +83,7 @@ const Header = () => {
                   onClick={() => {
                     dispatch(showUserIcon());
                   }}
+                  
                 >
                   <img
                     className="w-[3vw] h-[3vw] rounded-full cursor-pointer"

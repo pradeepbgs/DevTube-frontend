@@ -1,0 +1,20 @@
+import  axios  from 'axios'
+import { addVideo } from '../utils/userSlice'
+
+
+
+
+const useUserVideos = async (dispatch , userId) => {
+    try {
+        const res = await axios.get(`http://localhost:3000/api/v1/videos/c/${userId}`, {withCredentials: true})
+        if(res.data){
+            dispatch(addVideo(res.data.data))
+            console.log(res.data.data);
+        }
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export default useUserVideos;

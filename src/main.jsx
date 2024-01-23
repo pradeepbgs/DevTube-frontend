@@ -90,7 +90,7 @@ const router  = createBrowserRouter([
             ),
             children: [
               {
-                path: "/channel",
+                path: "/channel/:username",
                 element: (
                   <Suspense fallback={<Loader/>}>
                     <ChannelVideoPage/>

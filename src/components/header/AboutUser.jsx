@@ -1,13 +1,16 @@
 import React from 'react'
 import { FaSignOutAlt } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../utils/authSlice';
 import axios from 'axios';
+import {useSelector} from 'react-redux'
 
 const AboutUser = ({user}) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    // const USER  = useSelector((state) => state.auth.user);
 
     const logoutUser = async () => {
         try {
@@ -31,9 +34,9 @@ const AboutUser = ({user}) => {
             src={`${user?.avatar}`} 
             alt="" />
             <div className='ml-3 mt-2'>
-                <p className='text-gray-200 font-semibold'>{user?.fullname}sittu sittu</p>
-                <p className='text-gray-200 font-semibold'>@{user?.username}</p>
-                <p className='mt-2 text-blue-600'>View your channel </p>
+                <Link to={`/channel/${user?.username}`} ><p className='text-gray-200 font-semibold'>{user?.fullname}</p></Link>
+                <Link to={`/channel/${user?.username}`} ><p className='text-gray-200 font-semibold'>@{user?.username}</p></Link>
+                <Link to={`/channel/${user?.username}`} ><p className='mt-2 text-blue-600'>View your channel </p></Link>
             </div>
         </div>
         <div className=''>
