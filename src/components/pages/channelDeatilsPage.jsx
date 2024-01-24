@@ -6,6 +6,9 @@ import { useEffect } from "react";
 import { addUser } from "../../utils/userSlice";
 import { addVideo } from "../../utils/userSlice";
 
+
+
+
 const ChannelDetailsPage = () => {
   const dispatch = useDispatch();
 
@@ -35,6 +38,8 @@ const ChannelDetailsPage = () => {
 
 
 
+
+
   return (
     <div className="w-full h-full text-white">
       <div className="border border-l-0 border-r-0 border-t-0">
@@ -53,7 +58,7 @@ const ChannelDetailsPage = () => {
               </NavLink>
 
               <NavLink
-                to={"/channel/playlist"}
+                to={`/channel/${user?.username}/playlist`}
                 className={({ isActive }) =>
                   `${isActive ? "text-purple-400 " : "text-gray-200"}`
                 }
@@ -64,7 +69,7 @@ const ChannelDetailsPage = () => {
               </NavLink>
 
               <NavLink
-                to={"/channel/tweets"}
+                to={`/channel/${user?.username}/tweets`}
                 className={({ isActive }) =>
                   `${isActive ? "text-purple-400" : "text-gray-200"}`
                 }
@@ -75,7 +80,7 @@ const ChannelDetailsPage = () => {
               </NavLink>
 
               <NavLink
-                to={"/channel/subscribed"}
+                to={`/channel/${user?.username}/subscribed`}
                 className={({ isActive }) =>
                   `${isActive ? "text-purple-400" : "text-gray-200"}`
                 }

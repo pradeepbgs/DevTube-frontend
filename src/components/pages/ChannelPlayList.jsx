@@ -1,73 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaPlayCircle } from "react-icons/fa";
 import ChannelPlaylistCard from "./playlist/ChannelPlaylistCard";
-
+import {usePlayLists} from '../../useHooks/getUserPlaylist'
+import { useDispatch, useSelector } from "react-redux";
 
 const ChannelPlayList = () => {
   const [isTr, setIstr] = useState(true);
+  const dispatch = useDispatch()
+  const {user, userPlaylist} = useSelector(state => state.user)
 
-  const playlists = [
-    {
-      name: "React Mastery",
-      description:
-        "Master the art of building dynamic user interfaces with React.",
-      thumbnail:
-        "https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      videoCount: 10,
-      viewCount: 100,
-      ago: 2,
-    },
-    {
-      name: "JavaScript Mastery",
-      description:
-        "Master the art of building dynamic user interfaces with React.",
-      thumbnail:
-        "https://images.pexels.com/photos/2519817/pexels-photo-2519817.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      videoCount: 10,
-      viewCount: 100,
-      ago: 2,
-    },
-    {
-      name: "JavaScript Mastery",
-      description:
-        "Master the art of building dynamic user interfaces with React.",
-      thumbnail:
-        "https://images.pexels.com/photos/1739849/pexels-photo-1739849.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      videoCount: 10,
-      viewCount: 100,
-      ago: 2,
-    },
-    {
-      name: "JavaScript Mastery",
-      description:
-        "Master the art of building dynamic user interfaces with React.",
-      thumbnail:
-        "https://images.pexels.com/photos/1144256/pexels-photo-1144256.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      videoCount: 10,
-      viewCount: 100,
-      ago: 2,
-    },
-    {
-      name: "JavaScript Mastery",
-      description:
-        "Master the art of building dynamic user interfaces with React.",
-      thumbnail:
-        "https://images.pexels.com/photos/1144260/pexels-photo-1144260.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      videoCount: 10,
-      viewCount: 100,
-      ago: 2,
-    },
-  ];
+
+  useEffect(() => {
+    usePlayLists(dispatch, user?._id)
+  },[user])
 
   return isTr ? (
     <>
-    <div className="text-white flex flex-wrap ml-10 py-10">
-      {playlists.map((playlist, index) => (
-        <div key={index}><ChannelPlaylistCard playlist={playlist}/></div>
-      ))}
-    </div>
+       <div className="text-white flex flex-wrap ml-10 py-10">
+         {userPlaylist?.map((playlist, index) => (
+           <div key={index}><ChannelPlaylistCard playlist={playlist}/></div>
+         ))}
+       </div>
     </>
-  ) : (
+    ) : (
 
     <div className="mt-5 flex flex-col items-center">
       <FaPlayCircle className="text-5xl" />

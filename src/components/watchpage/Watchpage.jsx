@@ -40,12 +40,15 @@ const Watchpage = () => {
   };
 
   useEffect( () => {
-    if (videoId) {
-      getVideoDetails();
-    }
     dispatch(toggleMenuFalse()); 
     handleVideoLoad()
   }, [isloading]);
+
+  useEffect(() => {
+    if (videoId) {
+      getVideoDetails();
+    }
+  },[videoId])
 
 //  console.log(video?.videoFile)
 

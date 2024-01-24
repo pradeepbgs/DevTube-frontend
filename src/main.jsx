@@ -98,7 +98,7 @@ const router  = createBrowserRouter([
                 )
               },
               {
-                path: "/channel/playlist",
+                path: "/channel/:username/playlist",
                 element: (
                   <Suspense fallback={<Loader/>}>
                     <ChannelPlayList/>
@@ -108,7 +108,7 @@ const router  = createBrowserRouter([
               },
              
               {
-                path: "/channel/subscribed",
+                path: "/channel/:username/subscribed",
                 element: (
                   <Suspense fallback={<Loader/>}>
                     <ChannelSubscribedPage/>
@@ -116,7 +116,7 @@ const router  = createBrowserRouter([
                 )
               },
               {
-                path: "/channel/tweets",
+                path: "/channel/:username/tweets",
                 element: (
                   <Suspense fallback={<Loader/>}>
                     <ChannelTweets/>
@@ -126,7 +126,7 @@ const router  = createBrowserRouter([
             ]
           },
           {
-            path: "/channel/playlist/list/",
+            path: "/channel/:username/playlist/list/",
             element: (
               <Suspense fallback={<Loader/>}>
                 <ChannelPlaylistVideo/>
