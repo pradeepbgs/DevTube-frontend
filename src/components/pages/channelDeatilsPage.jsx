@@ -2,16 +2,16 @@
 import { Link, NavLink, Outlet, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { addUser } from "../../utils/userSlice";
 import { addVideo } from "../../utils/userSlice";
+import UploadPage from "./uploadPage/UploadPage";
 
 
 
 
 const ChannelDetailsPage = () => {
   const dispatch = useDispatch();
-
   const { username } = useParams();
 
   const { user } = useSelector((state) => state.user);
@@ -125,7 +125,7 @@ const ChannelDetailsPage = () => {
           />
         </div>
       </div>
-
+       
       <div className="flex justify-center">
         <Outlet />
       </div>

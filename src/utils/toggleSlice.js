@@ -7,6 +7,7 @@ const toggleSlice = createSlice({
         isMenuOpen: true,
         description: false,
         userIcon: false,
+        uploadPage: false
     },
     reducers: {
         toggleMenu: (state) => {   
@@ -23,6 +24,9 @@ const toggleSlice = createSlice({
         },
         showUserIcon: (state) => {
             state.userIcon = !state.userIcon
+        },
+        showUploadPage: (state, action) => {
+            state.uploadPage = action.payload;
         }
     }
 
@@ -33,6 +37,7 @@ export const {
     showDescription, 
     toggleMenuFalse, 
     toggleMenuTrue ,
-    showUserIcon
+    showUserIcon,
+    showUploadPage,
 } = toggleSlice.actions;
 export default toggleSlice.reducer;

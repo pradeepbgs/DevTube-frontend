@@ -8,6 +8,8 @@ import { useDispatch } from 'react-redux';
 import useUserVideos from '../../useHooks/getUserVideos'
 import { addVideo } from '../../utils/userSlice';
 import axios from 'axios';
+import UploadPage from './uploadPage/UploadPage';
+import {showUploadPage} from '../../utils/toggleSlice'
 
 
 
@@ -16,6 +18,7 @@ const ChannelVideoPage = () => {
     const dispatch = useDispatch()
 
     const {userVideo, user} = useSelector(state => state.user)
+    const {uploadPage} = useSelector(state => state.toggle)
 
 
     const getUserVideos = async () => {
@@ -52,8 +55,13 @@ return isTr ? (
         }
       </div>
       <div className='flex justify-center'>
-      <button className='px-5  bg-purple-600  text-[1.5rem]'>+ upload</button>
+      <button 
+      onClick={() => dispatch(showUploadPage(true))}
+      className='px-5  bg-purple-600  text-[1.5rem]'>+ upload</button>
       </div>
+      {uploadPage && <div className="absolute top-[30%] right-[30%] bg-purple-500 w-[40vw] h-fit px-10 py-10 rounded-md ">
+          <UploadPage/>
+       </div>}
     </div>
   ) : <div className='flex flex-col items-center mt-5'>
         <FaVideo
@@ -63,7 +71,8 @@ return isTr ? (
         <p className='w-[70%] mt-3 font-semibold'>This page has yet to upload a video. Search another page in order to find more videos.</p>
 
         <div>
-            <button className='px-5  bg-purple-600 mt-4 text-[1.5rem]'>+ upload</button>
+            <button onClick={() => setIsUploadPage(!isUploadPage)}
+            className='px-5  bg-purple-600 mt-4 text-[1.5rem]'>+ upload</button>
         </div>
       </div>
 }
