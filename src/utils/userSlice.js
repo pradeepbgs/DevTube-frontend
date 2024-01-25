@@ -7,6 +7,7 @@ const userSlice = createSlice({
         contnet: null,
         userVideo: null,
         userPlaylist: null,
+        userTweets: null,
     },
     reducers: {
         addComment: (state, action) => {
@@ -20,10 +21,13 @@ const userSlice = createSlice({
         },
         addUserPlaylist: (state, action) => {
             state.userPlaylist = action.payload;
+        },
+        addUserTweets: (state, action) => {
+            state.userTweets = action.payload;
         }
     }
 })
 
-export const { addComment , addUser, addVideo, addUserPlaylist} = userSlice.actions;
+export const { addComment , addUser, addVideo, addUserPlaylist, addUserTweets} = userSlice.actions;
 
 export default userSlice.reducer;
