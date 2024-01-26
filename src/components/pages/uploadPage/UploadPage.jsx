@@ -28,6 +28,10 @@ const UploadPage = () => {
         },
       });
 
+      if(res.data.statusCode === 201){
+        dispatch(showUploadPage(false));
+      }
+
     } catch (error) {
       console.error('Error:', error);
     } finally{

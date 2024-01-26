@@ -77,7 +77,6 @@ const CommentPage = () => {
 
   useEffect(() => {
     getVideoComments();
-    console.log("reloaded" + Date.now());
   }, [isLoading]);
 
   return (

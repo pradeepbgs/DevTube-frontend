@@ -9,7 +9,6 @@ const useUserVideos = async (dispatch , userId) => {
         const res = await axios.get(`http://localhost:3000/api/v1/videos/c/${userId}`, {withCredentials: true})
         if(res.data){
             dispatch(addVideo(res.data.data))
-            console.log(res.data.data);
         }
         return res;
     } catch (error) {

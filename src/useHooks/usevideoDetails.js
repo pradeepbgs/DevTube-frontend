@@ -38,7 +38,6 @@ const useVideoComments = async (videoId) => {
       const response = await axios.get(`http://localhost:3000/api/v1/comments/${videoId}`, { withCredentials: true });
       if (response) {
         const comments = response.data.data;
-        console.log(comments)
         dispatch(setComments(comments));
       }
     } catch (error) {
