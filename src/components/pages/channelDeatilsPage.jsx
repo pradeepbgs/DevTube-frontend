@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { addUser } from "../../utils/userSlice";
 import { addVideo } from "../../utils/userSlice";
 import UploadPage from "./uploadPage/UploadPage";
-
+import getUserprofile from "../../useHooks/getUserProfile";
 
 
 
@@ -17,23 +17,11 @@ const ChannelDetailsPage = () => {
   const { user } = useSelector((state) => state.user);
   const authUser = useSelector((state) => state.auth.user);
 
-  const getUserprofile = async () => {
-    try {
-      const res = await axios.get(
-        `http://localhost:3000/api/v1/users/c/${username}`,
-        { withCredentials: true }
-      );
-      if (res) {
-        dispatch(addUser(res.data.data));
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  
 
 
   useEffect(() => {
-    getUserprofile();
+    getUserprofile(dispatch, username);
   }, []);
 
 
@@ -105,9 +93,11 @@ const ChannelDetailsPage = () => {
               <p className="text-gray-300">{user?.subscribersCount}</p>
               {authUser?._id === user?._id ? (
                 <>
-                  <button className="bg-purple-500 px-6 py-2 mt-4">
-                    <Link>Edit</Link>
-                  </button>
+                  <Link 
+                  to={`/channel/${user?.username}/edit`}
+                  className="bg-purple-500 px-6 py-2">
+                    <button className="mt-4">Edit</button>
+                  </Link>
                 </>
               ) : (
                 <>

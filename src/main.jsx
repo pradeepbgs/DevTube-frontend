@@ -19,6 +19,10 @@ const ChannelSubscribedPage = lazy(() => import('./components/pages/ChannelSubsc
 const ChannelPlaylistVideo = lazy(() => import('./components/pages/ChannelPlaylistVideo'));
 const ChannelTweets = lazy(() => import('./components/pages/tweet/channelTweets.jsx'));
 import Loader from './components/Loader.jsx';
+import Editinfo from './components/pages/channelEdit/Editinfo.jsx';
+import PersonalDetails from './components/pages/channelEdit/PersonalDetails.jsx';
+import ChannelDetails from './components/pages/channelEdit/ChannelDetails.jsx';
+import ChangePassword from './components/pages/channelEdit/ChangePassword.jsx';
 
 const router  = createBrowserRouter([
       {
@@ -122,7 +126,7 @@ const router  = createBrowserRouter([
                     <ChannelTweets/>
                   </Suspense>
                 )
-              }
+              },
             ]
           },
           {
@@ -133,6 +137,40 @@ const router  = createBrowserRouter([
               </Suspense>
             )
           },
+          {
+            path: "/channel/:username/edit",
+            element: (
+              <Suspense fallback={<Loader/>}>
+                <Editinfo/>
+              </Suspense>
+            ),
+            children: [
+              {
+                path: "/channel/:username/edit",
+                element: (
+                  <Suspense fallback={<Loader/>}>
+                    <PersonalDetails/>
+                  </Suspense>
+                )
+              },
+              {
+                path: "/channel/:username/edit/channel-details",
+                element: (
+                  <Suspense fallback={<Loader/>}>
+                    <ChannelDetails/>
+                  </Suspense>
+                )
+              },
+              {
+                path: "/channel/:username/edit/change-password",
+                element: (
+                  <Suspense fallback={<Loader/>}>
+                    <ChangePassword/>
+                  </Suspense>
+                )
+              }
+            ]
+          }
         ]
       }
 ])  
