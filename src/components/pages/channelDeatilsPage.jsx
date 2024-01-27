@@ -7,6 +7,7 @@ import { addUser } from "../../utils/userSlice";
 import { addVideo } from "../../utils/userSlice";
 import UploadPage from "./uploadPage/UploadPage";
 import getUserprofile from "../../useHooks/getUserProfile";
+import { toggleSubscribe } from "../../useHooks/subscribeToggle";
 
 
 
@@ -17,7 +18,9 @@ const ChannelDetailsPage = () => {
   const { user } = useSelector((state) => state.user);
   const authUser = useSelector((state) => state.auth.user);
 
-  
+  const handleSubscribe = async () => {
+    toggleSubscribe(user?._id, dispatch);
+  }
 
 
   useEffect(() => {
@@ -95,13 +98,15 @@ const ChannelDetailsPage = () => {
                 <>
                   <Link 
                   to={`/channel/${user?.username}/edit`}
-                  className="bg-purple-500 px-6 py-2">
+                  className="bg-purple-500 rounded-md hover:bg-purple-600 px-6 py-2">
                     <button className="mt-4">Edit</button>
                   </Link>
                 </>
               ) : (
                 <>
-                  <button className="bg-purple-500 px-6 py-2 mt-4">
+                  <button 
+                  onClick={handleSubscribe}
+                  className="bg-purple-500 px-6 py-2 mt-4">
                     {user?.isSubscribed ? "unsubscribe" : "subscribe"}
                   </button>
                 </>

@@ -18,6 +18,7 @@ const ChannelVideoPage = () => {
     const dispatch = useDispatch()
 
     const {userVideo, user} = useSelector(state => state.user)
+    const authUser = useSelector((state) => state.auth.user);
     const {uploadPage} = useSelector(state => state.toggle)
 
 
@@ -54,11 +55,11 @@ return isTr ? (
             ))
         }
       </div>
-      <div className='flex justify-center'>
+      {authUser?._id === user?._id && <div className='flex justify-center'>
       <button 
       onClick={() => dispatch(showUploadPage(true))}
       className='px-5  bg-purple-600  text-[1.5rem]'>+ upload</button>
-      </div>
+      </div>}
       {uploadPage && <div className="absolute top-[30%] right-[30%] bg-purple-500 w-[40vw] h-fit px-10 py-10 rounded-md ">
           <UploadPage/>
        </div>}
@@ -70,10 +71,10 @@ return isTr ? (
         <h1 className='font-bold text-2xl'>No Videos Uploaded</h1>
         <p className='w-[70%] mt-3 font-semibold'>This page has yet to upload a video. Search another page in order to find more videos.</p>
 
-        <div>
-            <button onClick={() => setIsUploadPage(!isUploadPage)}
+        {authUser?._id === user?._id  && <div>
+            <button onClick={() => dispatch(showUploadPage(true))}
             className='px-5  bg-purple-600 mt-4 text-[1.5rem]'>+ upload</button>
-        </div>
+        </div>}
       </div>
 }
 

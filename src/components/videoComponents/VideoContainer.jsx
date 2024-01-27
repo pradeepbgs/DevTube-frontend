@@ -46,9 +46,9 @@ const VideoContainer = () => {
       <div className="flex flex-wrap md:ml-2">
       {video?.map((video, index) => (
   <div className="" key={index}>
-    <Link to={`/watchpage/${video?._id}`}>
+    {/* <Link to={`/watchpage/${video?._id}`}> */}
       <VideoCard index={index} video={video} />
-    </Link>
+    {/* </Link> */}
   </div>
 ))}
       </div>

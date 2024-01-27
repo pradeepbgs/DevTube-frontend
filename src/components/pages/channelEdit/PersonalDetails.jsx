@@ -1,17 +1,21 @@
 import axios from 'axios'
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import {getCurrentUser} from '../../../useHooks/getCurrenttUser'
 
 const PersonalDetails = () => {
 
-    const {user} = useSelector(state => state.user)
+    const {user,currentUser} = useSelector(state => state.user)
     const navigate = useNavigate()
-    const [name, setName] = useState(user?.fullname)
-    const [email, setEmail] = useState(user?.email)
+    const dispatch = useDispatch()
+    const [name, setName] = useState(currentUser?.fullname)
+    const [email, setEmail] = useState(currentUser?.email)
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleUpdate = async (e) => {
         e.preventDefault()
+        setIsLoading(true)
         try {
             const res = await axios.patch(`http://localhost:3000/api/v1/users/update-account-details`, 
             {
@@ -22,12 +26,19 @@ const PersonalDetails = () => {
             if(res.data.statusCode === 200){
                 navigate(`/channel/${user?.username}`)
             }
+            setIsLoading(false)
         } catch (error) {
             console.log(error)
         }
         setName('')
         setEmail('')
+        
     }
+
+
+    useEffect(() =>{
+        getCurrentUser(dispatch)
+    },[])
 
   return (
 
@@ -41,7 +52,7 @@ const PersonalDetails = () => {
             <input 
             className='w-[30vw] mb-5 py-1 px-5 rounded-md border bg-transparent'
             type="text" 
-            value={name}
+            value={currentUser?.fullname}
             onChange={(e) => setName(e.target.value)}
             name='fullname' 
             placeholder='full name'/>
@@ -49,11 +60,11 @@ const PersonalDetails = () => {
             <input 
             className='py-1 px-5 rounded-md border bg-transparent'
             type="text" 
-            value={email}
+            value={currentUser?.email}
             onChange={(e) => setEmail(e.target.value)}
             name="email" 
             placeholder="email" />
-            <button className='mt-5 px-6 border'>SAVE</button>
+            <button className='mt-5 px-6 border'>{isLoading? "UPDATING" : "SAVE"}</button>
         </form>
         </div>
     </div>
