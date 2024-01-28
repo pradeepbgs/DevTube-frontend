@@ -35,7 +35,7 @@ const useVideoComments = async (videoId) => {
 
   const getVideoComments = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/v1/comments/${videoId}`, { withCredentials: true });
+      const response = await axios.get(`https://video-backend-3ot2.onrender.com/api/v1/comments/${videoId}`, { withCredentials: true });
       if (response) {
         const comments = response.data.data;
         dispatch(setComments(comments));
