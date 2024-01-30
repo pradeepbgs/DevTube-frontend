@@ -14,6 +14,7 @@ const Login = () => {
 
   const loginSubmit = async (e) => {
     e.preventDefault();
+    
     try {
       const response = await axios.post(
         "https://video-backend-3ot2.onrender.com/api/v1/users/login",
@@ -26,6 +27,7 @@ const Login = () => {
         }
       );
       if(response){
+        console.log(response)
         const {user} = response.data.data
         localStorage.setItem('user',JSON.stringify(user))
         navigate('/')

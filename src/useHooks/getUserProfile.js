@@ -4,7 +4,7 @@ import axios from "axios";
 const getUserprofile = async (dispatch, username) => {
     try {
       const res = await axios.get(
-        `https://video-backend-3ot2.onrender.com/api/v1/users/c/${username}`,
+        `http://video-backend-3ot2.onrender.com/api/v1/users/c/${username}`,
         { withCredentials: true }
       );
       if (res) {
