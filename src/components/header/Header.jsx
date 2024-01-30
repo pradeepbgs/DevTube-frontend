@@ -3,8 +3,6 @@ import { FaBars, FaSearch } from "react-icons/fa"; // Import the hamburger icon
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { toggleMenu, showUserIcon } from "../../utils/toggleSlice";
-import axios from "axios";
-import { logout } from "../../utils/authSlice";
 import AboutUser from "./AboutUser";
 
 const Header = () => {

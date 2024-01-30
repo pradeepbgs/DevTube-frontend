@@ -7,7 +7,7 @@ const toggleSubscribe = async (channelId, dispatch) => {
 
     try {
         const response = await axios.post(
-          `https://video-backend-3ot2.onrender.com/api/v1/subscriptions/c/${channelId}`,
+          `/api/v1/subscriptions/c/${channelId}`,
           null, // Set the request payload to null since it's a POST request
           { withCredentials: true }
         );

@@ -21,7 +21,7 @@ const UploadPage = () => {
 
     try {
       setLoading(true)
-      const res = await axios.post(`http://localhost:3000/api/v1/videos/`, formData, {
+      const res = await axios.post(`/api/v1/videos/`, formData, {
         withCredentials: true,
         headers: {
           'Content-Type': 'multipart/form-data',

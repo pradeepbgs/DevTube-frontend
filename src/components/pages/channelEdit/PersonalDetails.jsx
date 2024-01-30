@@ -17,7 +17,7 @@ const PersonalDetails = () => {
         e.preventDefault()
         setIsLoading(true)
         try {
-            const res = await axios.patch(`http://localhost:3000/api/v1/users/update-account-details`, 
+            const res = await axios.patch(`/api/v1/users/update-account-details`, 
             {
                 fullname: name,
                 email: email,

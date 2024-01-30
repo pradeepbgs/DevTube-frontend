@@ -14,7 +14,7 @@ const AboutUser = ({user}) => {
 
     const logoutUser = async () => {
         try {
-          await axios.post("http://localhost:3000/api/v1/users/logout", null, {
+          await axios.post("/api/v1/users/logout", null, {
             withCredentials: true,
           });
           dispatch(logout());

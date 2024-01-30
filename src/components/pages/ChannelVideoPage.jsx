@@ -25,7 +25,7 @@ const ChannelVideoPage = () => {
     const getUserVideos = async () => {
         try {
           const res = await axios.get(
-            `http://localhost:3000/api/v1/videos/c/${user?._id}`,
+            `/api/v1/videos/c/${user?._id}`,
             { withCredentials: true }
           );
           if (res) {

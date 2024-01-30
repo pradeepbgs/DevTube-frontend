@@ -23,7 +23,7 @@ const CommentPage = () => {
   const getVideoComments = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/comments/${videoId}`,
+        `/api/v1/comments/${videoId}`,
         { withCredentials: true }
       );
       if (response) {
@@ -47,7 +47,7 @@ const CommentPage = () => {
   const handleDeleteComment = (commentId) => {
     if (commentId?.owner?._id === user?._id) {
       const res = axios.delete(
-        `http://localhost:3000/api/v1/comments/c/${commentId?._id}`,
+        `/api/v1/comments/c/${commentId?._id}`,
         { withCredentials: true }
       );
 

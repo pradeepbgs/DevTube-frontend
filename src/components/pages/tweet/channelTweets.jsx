@@ -16,7 +16,7 @@ const ChannelTweets = () => {
     e.preventDefault()
     try {
       const res = await axios
-      .post(`http://localhost:3000/api/v1/tweets`,{content: tweet}, {withCredentials: true})
+      .post(`/api/v1/tweets`,{content: tweet}, {withCredentials: true})
       if(res?.data){
         setTweet('')
       }
