@@ -17,7 +17,7 @@ const Login = () => {
     
     try {
       const response = await axios.post(
-        "https://video-backend-3ot2.onrender.com/api/v1/users/login",
+        "/api/v1/users/login",
         {
           email,
           password,
