@@ -17,9 +17,8 @@ const Watchpage = () => {
   const dispatch = useDispatch();
   const { videoId } = useParams();
   const isDescription = useSelector((state) => state.toggle.description);
-  const { video, comments, likes, owner, subscribers, areYouSubscribed } =
+  const { video, likes, owner, subscribers, areYouSubscribed } =
     useSelector((state) => state.video);
-  const { user } = useSelector((state) => state.auth);
   
 
   const channelId = owner?._id;
