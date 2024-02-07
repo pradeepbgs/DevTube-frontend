@@ -4,19 +4,15 @@ import { FaThumbsUp, FaThumbsDown, FaSave, FaBell } from "react-icons/fa";
 import CommentPage from "./CommentPage";
 import { useSelector } from "react-redux";
 import { showDescription, toggleMenuFalse } from "../../utils/toggleSlice";
-import { isSubscribed } from "../../utils/videoSlice";
-import VideoListings from "../videoListings/VideoListings";
-import {useVideoDetails} from "../../useHooks/usevideoDetails";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { toggleSubscribe } from "../../useHooks/subscribeToggle";
-import { useComment } from "../../useHooks/useComment";
-import { addComment } from "../../utils/userSlice";
 import VideoPlayer from "./VideoPlayer";
 
 const Watchpage = () => {
   const [isloading, setIsLoading] = useState(false)
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [Video, setVideo] = useState(null)
+
 
   const dispatch = useDispatch();
   const { videoId } = useParams();
@@ -26,8 +22,6 @@ const Watchpage = () => {
   const { user } = useSelector((state) => state.auth);
   
 
-  const { getVideoDetails } = useVideoDetails(videoId);
-
   const channelId = owner?._id;
 
   const handleSubscribeToggle = async () => {
@@ -35,29 +29,38 @@ const Watchpage = () => {
   };
 
 
-  const handleVideoLoad = () => {
-    setIsVideoLoaded(true);
+
+  const getVideoDetails = async () => {
+    try {
+      const response = await axios.get(`/api/v1/videos/${videoId}`, { withCredentials: true })
+
+      if (response) {
+        const video = response.data.data
+        setVideo(video)
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error)
+    }
   };
 
   useEffect( () => {
     dispatch(toggleMenuFalse()); 
-    handleVideoLoad()
   }, [isloading]);
 
   useEffect(() => {
-    if (videoId) {
-      getVideoDetails();
+    setIsLoading(true)
+    if(videoId) {
+      getVideoDetails()
     }
-  },[videoId])
+  },[])
 
-//  console.log(video?.videoFile)
 
   return (
     <div className="text-white h-screen flex justify-between">
       <div className="w-[67%] px-2 py-3">
         <div className=" px-2">
           {
-          isVideoLoaded && <VideoPlayer videoFile = {video?.videoFile} />}
+          Video && <VideoPlayer videoFile = {video?.videoFile} />}
         </div>
 
         <div className="border ml-1 px-4 py-2 mt-2 rounded-md bg-black bg-opacity-5 ">
