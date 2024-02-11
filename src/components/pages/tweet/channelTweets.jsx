@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, {useEffect, useState} from 'react'
+import  {useEffect, useState} from 'react'
 import {  FaTwitter } from 'react-icons/fa';
 import TweetCard from './TweetCard';
 import { getUserTweets } from '../../../useHooks/getUserTweets';
@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const ChannelTweets = () => {
   const [isTr, setIstr] = useState(false)
+  const [IsLoading, setIsLoading] = useState(false)
   const [tweet, setTweet] = useState('')
   const dispatch = useDispatch()
   const {user, userTweets} = useSelector(state => state.user)
@@ -19,32 +20,22 @@ const ChannelTweets = () => {
       .post(`/api/v1/tweets`,{content: tweet}, {withCredentials: true})
       if(res?.data){
         setTweet('')
+        setIsLoading(true)
       }
     } catch (error) {
       console.log(error);
     }
   }
 
-
-
-
-
-
-
   useEffect(() => {
     if(user){
       getUserTweets(dispatch, user?._id)
     }
-  },[user])
+  },[user, IsLoading])
 
   useEffect(() => {
     if(userTweets?.userTweets?.length > 0){
       setIstr(true)
-    }else{
-      setIstr(false)
-    }
-    return () => {
-      setIstr(false)
     }
   },[userTweets, isTr])
 

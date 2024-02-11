@@ -1,11 +1,6 @@
-// import React, { useState } from 'react';
 import { Link, NavLink, Outlet, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { addUser } from "../../utils/userSlice";
-import { addVideo } from "../../utils/userSlice";
-import UploadPage from "./uploadPage/UploadPage";
+import { useEffect } from "react";
 import getUserprofile from "../../useHooks/getUserProfile";
 import { toggleSubscribe } from "../../useHooks/subscribeToggle";
 
@@ -26,9 +21,6 @@ const ChannelDetailsPage = () => {
   useEffect(() => {
     getUserprofile(dispatch, username);
   }, []);
-
-
-
 
 
   return (

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import VideoCard from "./VideoCard";
-import { Link } from "react-router-dom";
 import { toggleMenuTrue } from "../../utils/toggleSlice";
 import { useDispatch } from "react-redux";
 import { faVideo } from "@fortawesome/free-solid-svg-icons";
