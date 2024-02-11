@@ -20,7 +20,7 @@ const ChannelDetailsPage = () => {
 
   useEffect(() => {
     getUserprofile(dispatch, username);
-  }, []);
+  });
 
 
   return (
