@@ -13,21 +13,16 @@ const Watchpage = () => {
   const [isloading, setIsLoading] = useState(false)
   const [Video, setVideo] = useState(null)
 
+  const dispatch = useDispatch()
+  const { videoId } = useParams()
+  const isDescription = useSelector((state) => state.toggle.description)
 
-  const dispatch = useDispatch();
-  const { videoId } = useParams();
-  const isDescription = useSelector((state) => state.toggle.description);
-  const { video, likes, owner, subscribers, areYouSubscribed } =
-    useSelector((state) => state.video);
-  
 
-  const channelId = owner?._id;
+  const channelId = Video?.owner?._id
 
   const handleSubscribeToggle = async () => {
-    toggleSubscribe(channelId, dispatch);
-  };
-
-
+    toggleSubscribe(channelId, dispatch)
+  }
 
   const getVideoDetails = async () => {
     try {
@@ -42,9 +37,10 @@ const Watchpage = () => {
     }
   };
 
+
   useEffect( () => {
-    dispatch(toggleMenuFalse()); 
-  }, [isloading]);
+    dispatch(toggleMenuFalse())
+  })
 
   useEffect(() => {
     setIsLoading(true)
@@ -53,24 +49,24 @@ const Watchpage = () => {
     }
   },[])
 
+  console.log(Video)
 
   return (
     <div className="text-white h-screen flex justify-between">
       <div className="w-[67%] px-2 py-3">
         <div className=" px-2">
-          {
-          Video && <VideoPlayer videoFile = {video?.videoFile} />}
+         {Video && <VideoPlayer videoFile = {Video?.videoFile} />}
         </div>
 
         <div className="border ml-1 px-4 py-2 mt-2 rounded-md bg-black bg-opacity-5 ">
           <div className="flex justify-between   ">
             <div className="w-[90%]">
-              <h1 className="text-[1.3rem] font-semibold">{video?.title}</h1>
+              <h1 className="text-[1.3rem] font-semibold">{Video?.title}</h1>
               <p>30,164 Views · 18 hours ago</p>
             </div>
             <div className="py-2 flex h-[30%]">
               <button className="px-4 py-2 border border-gray-400 flex items-center hover:bg-gray-900">
-                <p className="mr-2">{likes}</p>
+                <p className="mr-2">{Video?.likesCount}</p>
                 <FaThumbsUp />
               </button>
               <button className="px-4 py-2 border border-gray-400 ml-2 flex items-center hover:bg-gray-900">
@@ -87,11 +83,11 @@ const Watchpage = () => {
             <div className="flex items-center">
               <img
                 className="w-10 h-10 rounded-full"
-                src={`${owner?.avatar}`}
+                src={`${Video?.owner?.avatar}`}
               />
               <div className="ml-3">
-                <p className="font-semibold">{owner?.fullname}</p>
-                <p className="text-gray-300">{subscribers} subscribers</p>
+                <p className="font-semibold">{Video?.owner?.fullname}</p>
+                <p className="text-gray-300">{Video?.subscribersCount} subscribers</p>
               </div>
             </div>
             <button
@@ -99,7 +95,7 @@ const Watchpage = () => {
               className="flex items-center bg-gray-100 hover:bg-gray-300 text-black px-2 rounded-full"
             >
               <p className="mr-3 font-semibold">
-                {areYouSubscribed ? "subscribed" : "subscribe"}
+                {Video?.isSubscribed ? "subscribed" : "subscribe"}
               </p>
               <FaBell />
             </button>
@@ -118,7 +114,7 @@ const Watchpage = () => {
               {isDescription ? "Hide" : "Show"}
             </button>
             <p className="h-[10]">
-              {video?.description ? video?.description : "No description"}
+              {Video?.description ? Video?.description : "No description"}
             </p>
           </div>
         </div>

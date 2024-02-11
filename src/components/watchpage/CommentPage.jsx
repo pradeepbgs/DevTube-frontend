@@ -2,10 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setComments } from "../../utils/videoSlice";
-import { useVideoComments } from "../../useHooks/usevideoDetails";
 import { useParams } from "react-router-dom";
 import { useComment } from "../../useHooks/useComment";
-import { addComment } from "../../utils/userSlice";
 import { MdMoreVert } from "react-icons/md";
 
 const CommentPage = () => {
@@ -36,11 +34,11 @@ const CommentPage = () => {
   };
 
   const handleCommentSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     const res = useComment(isComment, videoId);
     if (res) {
-      setIsLoading((prev) => !prev);
-      setIsComment("");
+      setIsLoading((prev) => !prev)
+      setIsComment("")
     }
   };
 
@@ -52,8 +50,8 @@ const CommentPage = () => {
       );
 
       if (res) {
-        setIsLoading((prev) => !prev);
-        setIsBtn(false);
+        setIsLoading((prev) => !prev)
+        setIsBtn(false)
       }
     } else {
       alert("this is not your comment so you cant delete  it");
@@ -69,21 +67,21 @@ const CommentPage = () => {
       { withCredentials: true }
     );
     if (res) {
-      setIsUpdatable(false);
+      setIsUpdatable(false)
     }
   };
 
 
 
   useEffect(() => {
-    getVideoComments();
-  }, [isLoading]);
+    getVideoComments()
+  }, [isLoading])
 
   return (
     <>
       <div className="border rounded-md mt-3">
         <div className=" px-3 mt-5 ml-1 rounded-lg">
-          <p className="mt-3">573 Comments</p>
+          <p className="mt-3">{comments?.length} Comments</p>
           <form className="mt-3 mb-4 px-2 flex">
             <img
               className="w-8 h-8 rounded-full mr-4"

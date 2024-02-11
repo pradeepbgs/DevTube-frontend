@@ -19,7 +19,7 @@ const VideoContainer = () => {
     try {
       const response = await axios.get("/api/v1/videos", {withCredentials: true});
   
-      if (!response?.data?.data.length === 0) {
+      if (!response?.data?.data.length == 0) {
         setVideos(response?.data?.data); 
         setIsVideos(true);
       } else {
@@ -46,9 +46,7 @@ const VideoContainer = () => {
       <div className="flex flex-wrap md:ml-2">
       {video?.map((video, index) => (
   <div className="" key={index}>
-    {/* <Link to={`/watchpage/${video?._id}`}> */}
       <VideoCard index={index} video={video} />
-    {/* </Link> */}
   </div>
 ))}
       </div>
