@@ -86,7 +86,7 @@ const CommentPage = () => {
             <img
               className="w-8 h-8 rounded-full mr-4"
               src={`${user?.avatar}`}
-              alt=""
+              alt="user"
             />
             <input
               onChange={(e) => setIsComment(e.target.value)}
@@ -99,6 +99,7 @@ const CommentPage = () => {
             <button
               type="submit"
               onClick={handleCommentSubmit}
+              disabled={user? false : true}
               className="border px-4 py-1 ml-4 font-semibold hover:bg-gray-800"
             >
               Add

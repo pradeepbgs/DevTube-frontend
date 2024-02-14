@@ -49,8 +49,6 @@ const Watchpage = () => {
     }
   },[])
 
-  console.log(Video)
-
   return (
     <div className="text-white h-screen flex justify-between">
       <div className="w-[67%] px-2 py-3">
