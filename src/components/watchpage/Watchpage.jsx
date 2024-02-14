@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { toggleSubscribe } from "../../useHooks/subscribeToggle";
 import VideoPlayer from "./VideoPlayer";
+import { toggleLike } from "../../useHooks/likeVideoToggle";
 
 const Watchpage = () => {
   const [isloading, setIsLoading] = useState(false)
@@ -17,13 +18,21 @@ const Watchpage = () => {
   const { videoId } = useParams()
   const isDescription = useSelector((state) => state.toggle.description)
 
-
   const channelId = Video?.owner?._id
 
   const handleSubscribeToggle = async () => {
     toggleSubscribe(channelId, dispatch)
   }
 
+  const toggleVideoLike = async () => {
+    const res = await toggleLike(videoId)
+    if(res){
+      console.log(res)
+      setIsLoading(true)
+    }
+  }
+
+  
   const getVideoDetails = async () => {
     try {
       const response = await axios.get(`/api/v1/videos/${videoId}`, { withCredentials: true })
@@ -40,14 +49,15 @@ const Watchpage = () => {
 
   useEffect( () => {
     dispatch(toggleMenuFalse())
-  })
+  },[])
 
   useEffect(() => {
     setIsLoading(true)
     if(videoId) {
       getVideoDetails()
     }
-  },[])
+  },[isloading])
+
 
   return (
     <div className="text-white h-screen flex justify-between">
@@ -63,7 +73,9 @@ const Watchpage = () => {
               <p>30,164 Views · 18 hours ago</p>
             </div>
             <div className="py-2 flex h-[30%]">
-              <button className="px-4 py-2 border border-gray-400 flex items-center hover:bg-gray-900">
+              <button 
+              onClick={toggleVideoLike}
+              className="px-4 py-2 border border-gray-400 flex items-center hover:bg-gray-900">
                 <p className="mr-2">{Video?.likesCount}</p>
                 <FaThumbsUp />
               </button>
@@ -119,7 +131,8 @@ const Watchpage = () => {
         <CommentPage/>
       </div>
       <div className="w-[40%]">
-        // need more works on this listing page with backend and FE too
+       ( // need more works on this listing page with backend and FE too)
+
         {/* <VideoListings
               imgWidth="w-[14vw]"
               titleFont="font-semibold"

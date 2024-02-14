@@ -77,6 +77,8 @@ const CommentPage = () => {
     getVideoComments()
   }, [isLoading])
 
+  console.log(comments);
+
   return (
     <>
       <div className="border rounded-md mt-3">
@@ -107,7 +109,7 @@ const CommentPage = () => {
           </form>
         </div>
         <div className=" w-[100%]  justify-between ">
-          {comments?.map((items, index) => (
+          {Array.isArray(comments) && comments?.length > 0 && comments?.map((items, index) => (
             <div
               key={index}
               className="flex justify-between hover:bg-zinc-900 border border-l-0 border-r-0 border-b-0 py-3 px-2"
