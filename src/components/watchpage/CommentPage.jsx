@@ -5,6 +5,7 @@ import { setComments } from "../../utils/videoSlice";
 import { useParams } from "react-router-dom";
 import { useComment } from "../../useHooks/useComment";
 import { MdMoreVert } from "react-icons/md";
+import { getTimeElapsed } from "../../utils/getTimeAgo";
 
 const CommentPage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -77,7 +78,6 @@ const CommentPage = () => {
     getVideoComments()
   }, [isLoading])
 
-  console.log(comments);
 
   return (
     <>
@@ -127,7 +127,7 @@ const CommentPage = () => {
                       <p>@{items?.owner?.username}</p>
                     </span>
                     <p className="ml-3 text-gray-300">
-                      · {items?.ago} minutes ago
+                      · {getTimeElapsed(items?.createdAt)}
                     </p>
                   </div>
                   <div className="mt-2">

@@ -10,6 +10,9 @@ import { toggleSubscribe } from "../../useHooks/subscribeToggle";
 import VideoPlayer from "./VideoPlayer";
 import { toggleLike } from "../../useHooks/likeVideoToggle";
 import { decreaseLikes, increaseLikes, setLikes } from "../../utils/videoSlice";
+import { getTimeElapsed } from "../../utils/getTimeAgo";
+
+
 
 const Watchpage = () => {
   const [isloading, setIsLoading] = useState(false);
@@ -53,7 +56,7 @@ const Watchpage = () => {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  };
+  };  
 
   useEffect(() => {
     dispatch(toggleMenuFalse());
@@ -66,6 +69,7 @@ const Watchpage = () => {
     }
   }, [isloading]);
 
+  const VideocreatedAGo = getTimeElapsed(Video?.createdAt);
   return (
     <div className="text-white h-screen flex justify-between">
       <div className="w-[67%] px-2 py-3">
@@ -77,7 +81,7 @@ const Watchpage = () => {
           <div className="flex justify-between   ">
             <div className="w-[90%]">
               <h1 className="text-[1.3rem] font-semibold">{Video?.title}</h1>
-              <p>30,164 Views · 18 hours ago</p>
+              <p>30,164 Views · {VideocreatedAGo}</p>
             </div>
             <div className="py-2 flex h-[30%]">
               <NavLink
