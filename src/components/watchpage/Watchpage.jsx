@@ -5,65 +5,72 @@ import CommentPage from "./CommentPage";
 import { useSelector } from "react-redux";
 import { showDescription, toggleMenuFalse } from "../../utils/toggleSlice";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { toggleSubscribe } from "../../useHooks/subscribeToggle";
 import VideoPlayer from "./VideoPlayer";
 import { toggleLike } from "../../useHooks/likeVideoToggle";
+import { decreaseLikes, increaseLikes, setLikes } from "../../utils/videoSlice";
 
 const Watchpage = () => {
-  const [isloading, setIsLoading] = useState(false)
-  const [Video, setVideo] = useState(null)
+  const [isloading, setIsLoading] = useState(false);
+  const [Video, setVideo] = useState(null);
 
-  const dispatch = useDispatch()
-  const { videoId } = useParams()
-  const isDescription = useSelector((state) => state.toggle.description)
-
-  const channelId = Video?.owner?._id
+  const dispatch = useDispatch();
+  const { videoId } = useParams();
+  const isDescription = useSelector((state) => state.toggle.description);
+  const { Likes } = useSelector((state) => state.video);
+  const channelId = Video?.owner?._id;
 
   const handleSubscribeToggle = async () => {
-    toggleSubscribe(channelId, dispatch)
-  }
+    toggleSubscribe(channelId, dispatch);
+  };
 
   const toggleVideoLike = async () => {
-    const res = await toggleLike(videoId)
-    if(res){
-      console.log(res)
-      setIsLoading(true)
+    const res = await toggleLike(videoId);
+    if (res?.data?.message === "liked video") {
+      setVideo({ ...Video, isLiked: true });
+    } else {
+      setVideo({ ...Video, isLiked: false });
     }
-  }
-
-  
-  const getVideoDetails = async () => {
-    try {
-      const response = await axios.get(`/api/v1/videos/${videoId}`, { withCredentials: true })
-
-      if (response) {
-        const video = response.data.data
-        setVideo(video)
-      }
-    } catch (error) {
-      console.error('Error fetching data:', error)
+    if (Video?.isLiked) {
+      dispatch(decreaseLikes());
+    } else {
+      dispatch(increaseLikes());
     }
   };
 
+  const getVideoDetails = async () => {
+    try {
+      const response = await axios.get(`/api/v1/videos/${videoId}`, {
+        withCredentials: true,
+      });
 
-  useEffect( () => {
-    dispatch(toggleMenuFalse())
-  },[])
+      if (response) {
+        const video = response.data.data;
+        setVideo(video);
+        dispatch(setLikes(video?.likesCount));
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   useEffect(() => {
-    setIsLoading(true)
-    if(videoId) {
-      getVideoDetails()
-    }
-  },[isloading])
+    dispatch(toggleMenuFalse());
+  }, []);
 
+  useEffect(() => {
+    setIsLoading(true);
+    if (videoId) {
+      getVideoDetails();
+    }
+  }, [isloading]);
 
   return (
     <div className="text-white h-screen flex justify-between">
       <div className="w-[67%] px-2 py-3">
         <div className=" px-2">
-         {Video && <VideoPlayer videoFile = {Video?.videoFile} />}
+          {Video && <VideoPlayer videoFile={Video?.videoFile} />}
         </div>
 
         <div className="border ml-1 px-4 py-2 mt-2 rounded-md bg-black bg-opacity-5 ">
@@ -73,12 +80,16 @@ const Watchpage = () => {
               <p>30,164 Views · 18 hours ago</p>
             </div>
             <div className="py-2 flex h-[30%]">
-              <button 
-              onClick={toggleVideoLike}
-              className="px-4 py-2 border border-gray-400 flex items-center hover:bg-gray-900">
-                <p className="mr-2">{Video?.likesCount}</p>
+              <NavLink
+                onClick={toggleVideoLike}
+                className={`px-4 py-2 border border-gray-400 flex items-center hover:bg-gray-900 ${
+                  Video?.isLiked ? "text-blue-500" : ""
+                }`}
+              >
+                <p className="mr-2">{Likes}</p>
                 <FaThumbsUp />
-              </button>
+              </NavLink>
+
               <button className="px-4 py-2 border border-gray-400 ml-2 flex items-center hover:bg-gray-900">
                 <FaThumbsDown />
                 <p className="ml-2"></p>
@@ -97,7 +108,9 @@ const Watchpage = () => {
               />
               <div className="ml-3">
                 <p className="font-semibold">{Video?.owner?.fullname}</p>
-                <p className="text-gray-300">{Video?.subscribersCount} subscribers</p>
+                <p className="text-gray-300">
+                  {Video?.subscribersCount} subscribers
+                </p>
               </div>
             </div>
             <button
@@ -128,11 +141,10 @@ const Watchpage = () => {
             </p>
           </div>
         </div>
-        <CommentPage/>
+        <CommentPage />
       </div>
       <div className="w-[40%]">
-       ( // need more works on this listing page with backend and FE too)
-
+        ( // need more works on this listing page with backend and FE too)
         {/* <VideoListings
               imgWidth="w-[14vw]"
               titleFont="font-semibold"
