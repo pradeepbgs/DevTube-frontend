@@ -5,12 +5,12 @@ import CommentPage from "./CommentPage";
 import { useSelector } from "react-redux";
 import { showDescription, toggleMenuFalse } from "../../utils/toggleSlice";
 import { useDispatch } from "react-redux";
-import { NavLink, useParams } from "react-router-dom";
+import { Link, NavLink, useParams } from "react-router-dom";
 import { toggleSubscribe } from "../../useHooks/subscribeToggle";
 import VideoPlayer from "./VideoPlayer";
 import { toggleLike } from "../../useHooks/likeVideoToggle";
 import { decreaseLikes, increaseLikes, setLikes } from "../../utils/videoSlice";
-import { getTimeElapsed } from "../../utils/getTimeAgo";
+import { getTimeElapsed } from "../../utils/getTimeAgo.js";
 
 
 
@@ -106,12 +106,15 @@ const Watchpage = () => {
           </div>
           <div className="flex justify-between mt-1">
             <div className="flex items-center">
+              <Link to={`/channel/${Video?.owner?.username}`}>
               <img
                 className="w-10 h-10 rounded-full"
                 src={`${Video?.owner?.avatar}`}
               />
+              </Link>
               <div className="ml-3">
-                <p className="font-semibold">{Video?.owner?.fullname}</p>
+                <Link  to={`/channel/${Video?.owner?.username}`}
+                className="font-semibold">{Video?.owner?.fullname}</Link>
                 <p className="text-gray-300">
                   {Video?.subscribersCount} subscribers
                 </p>
