@@ -30,15 +30,12 @@ const Watchpage = () => {
 
   const toggleVideoLike = async () => {
     const res = await toggleLike(videoId);
-    if (res?.data?.message === "liked video") {
+     if (res?.data?.message === "liked video") {
       setVideo({ ...Video, isLiked: true });
+      dispatch(increaseLikes());
     } else {
       setVideo({ ...Video, isLiked: false });
-    }
-    if (Video?.isLiked) {
       dispatch(decreaseLikes());
-    } else {
-      dispatch(increaseLikes());
     }
   };
 
