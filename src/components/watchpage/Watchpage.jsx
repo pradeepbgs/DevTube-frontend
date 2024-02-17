@@ -10,7 +10,7 @@ import { toggleSubscribe } from "../../useHooks/subscribeToggle";
 import VideoPlayer from "./VideoPlayer";
 import { toggleLike } from "../../useHooks/likeVideoToggle";
 import { decreaseLikes, increaseLikes, setLikes } from "../../utils/videoSlice";
-import { getTimeElapsed } from "../../utils/getTimeAGo";
+import { getTimeElapsed } from "../../utils/getTimeAGo.js";
 
 
 
