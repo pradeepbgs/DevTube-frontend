@@ -18,11 +18,15 @@ const Header = () => {
 
   const formHandler = (e) => {
     e.preventDefault();
-    navigate("/results");
+    const query = e.target.elements.search.value.trim();
+    if (query !== "") {
+      navigate(`/results/${query}`);
+    }
   };
+  
+  
 
   useEffect(() => {}, [isLoggedIn]);
-
 
   return (
     <div className="w-full">
@@ -56,8 +60,10 @@ const Header = () => {
                 <input
                   type="text"
                   placeholder="Search"
+                  name="search" // Add the name attribute
                   className="bg-black text-white w-[26vw] border border-l-0 border-gray-500 px-3 py-2 focus:outline-none"
                 />
+
                 <button
                   type="submit"
                   className="bg-black text-white px-3 py-2 ml-2 border border-gray-500 focus:outline-none"
@@ -81,7 +87,6 @@ const Header = () => {
                   onClick={() => {
                     dispatch(showUserIcon());
                   }}
-                  
                 >
                   <img
                     className="w-[3vw] h-[3vw] rounded-full cursor-pointer"
@@ -95,9 +100,7 @@ const Header = () => {
         </nav>
       </div>
       {userIcon && isLoggedIn && (
-        <div
-          className="absolute top-3 right-24 transition-transform 1s"
-        >
+        <div className="absolute top-3 right-24 transition-transform 1s">
           <AboutUser user={user} />
         </div>
       )}

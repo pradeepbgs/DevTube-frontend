@@ -1,4 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
+
 
 const VideoListings = ({
   imgWidth = "w-[20vw]",
@@ -20,20 +23,28 @@ const VideoListings = ({
     
         <div className="text-white ml-3 py-2 flex" >
           <div>
+            <Link 
+              to={`/watchpage/${video?._id}`}
+            >
             <img 
             className={`${imgWidth} ${imgHeight}`}
             src={video?.thumbnail} alt="" />
+            </Link>
           </div>
           <div className="ml-2 w-[37%]">
             <h1 className={`${titleFont} ${titleWidth} ${titleSize}`}>{video?.title}</h1>
             <p className="mb-1">200k • views</p>
             <div className="flex items-center mb-2">
+              <Link
+              to={`/channel/${video?.owner?.username}`}
+              >
               <img
-                className="w-9 mr-3 rounded-full"
-                src="https://assets.stickpng.com/thumbs/585e4beacb11b227491c3399.png"
+                className="w-8 h-8 mr-3 rounded-full"
+                src={`${video?.owner?.avatar}`}
                 alt=""
               />
-              <p>{video?.username}</p>
+              </Link>
+              <p>{video?.owner?.username}</p>
             </div>
             {showVideoDescription && <span className={``}>
               <p className={`${descriptionWidth}`}>
