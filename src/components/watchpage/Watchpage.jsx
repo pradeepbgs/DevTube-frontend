@@ -5,12 +5,12 @@ import CommentPage from "./CommentPage";
 import { useSelector } from "react-redux";
 import { showDescription, toggleMenuFalse } from "../../utils/toggleSlice";
 import { useDispatch } from "react-redux";
-import { Link, NavLink, useParams } from "react-router-dom";
+import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
 import { toggleSubscribe } from "../../useHooks/subscribeToggle";
 import VideoPlayer from "./VideoPlayer";
 import { toggleLike } from "../../useHooks/likeVideoToggle";
 import { decreaseLikes, increaseLikes, setLikes } from "../../utils/videoSlice";
-import { getTimeElapsed } from "../../utils/getTimeAgo.js";
+import { getTimeElapsed } from "../../utils/getTimeAGo";
 
 
 
@@ -19,25 +19,37 @@ const Watchpage = () => {
   const [Video, setVideo] = useState(null);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const { videoId } = useParams();
   const isDescription = useSelector((state) => state.toggle.description);
   const { Likes } = useSelector((state) => state.video);
+  const { user } = useSelector((state) => state.auth);
   const channelId = Video?.owner?._id;
 
   const handleSubscribeToggle = async () => {
-    toggleSubscribe(channelId, dispatch);
+    if(user){
+      await toggleSubscribe(channelId, dispatch);
+    }else{
+      alert("pls login to like and subscribe")
+    }
   };
 
   const toggleVideoLike = async () => {
-    const res = await toggleLike(videoId);
-     if (res?.data?.message === "liked video") {
-      setVideo({ ...Video, isLiked: true });
-      dispatch(increaseLikes());
-    } else {
-      setVideo({ ...Video, isLiked: false });
-      dispatch(decreaseLikes());
-    }
+    if(user){
+      const res = await toggleLike(videoId);
+      if (res?.data?.message === "liked video") {
+        setVideo({ ...Video, isLiked: true });
+        dispatch(increaseLikes());
+      } else {
+        setVideo({ ...Video, isLiked: false });
+        dispatch(decreaseLikes());
+      }
+    }else{
+      alert("pls login to like and subscribe")
+      }
+    
   };
+  
 
   const getVideoDetails = async () => {
     try {
