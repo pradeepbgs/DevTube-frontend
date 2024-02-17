@@ -5,7 +5,7 @@ import { setComments } from "../../utils/videoSlice";
 import { useParams } from "react-router-dom";
 import { useComment } from "../../useHooks/useComment";
 import { MdMoreVert } from "react-icons/md";
-import { getTimeElapsed } from "../../utils/getTimeAGo";
+import { getTimeElapsed } from "../../utils/getCreatedTime";
 
 const CommentPage = () => {
   const [isLoading, setIsLoading] = useState(false);
