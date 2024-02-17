@@ -1,63 +1,52 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import VideoCard from "./VideoCard";
 import { toggleMenuTrue } from "../../utils/toggleSlice";
-import { useDispatch } from "react-redux";
+import { addVideos } from "../../utils/videos.slice";
+import { useDispatch, useSelector } from "react-redux";
 import { faVideo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 
-
-
 const VideoContainer = () => {
-  const [isVideos, setIsVideos] = useState(false);
-  const [video, setVideos] = useState([])
-
   const dispatch = useDispatch();
+  const { videos } = useSelector((state) => state.videos);
 
   const getData = async () => {
     try {
-      const response = await axios.get("/api/v1/videos", {withCredentials: true});
-  
-      if (!response?.data?.data.length == 0) {
-        setVideos(response?.data?.data); 
-        setIsVideos(true);
-      } else {
-        setIsVideos(false); 
+      const response = await axios.get("/api/v1/videos", { withCredentials: true });
+      if (response?.data?.data?.length > 0) {
+        dispatch(addVideos(response?.data?.data));
       }
     } catch (error) {
-      setIsVideos(false); 
+      console.error("Error fetching videos:", error);
     }
   };
 
-
-  useEffect( () => {
+  useEffect(() => {
     dispatch(toggleMenuTrue());
-    const data = getData()
-
-    return () => {
-      data
+    if (!videos) {
+      getData();
     }
-  },[]);
+  }, [videos]);
 
-
-  return isVideos ? (
+  return videos ? (
     <div className="overflow-hidden mt-5">
       <div className="flex flex-wrap md:ml-2">
-      {video?.map((video, index) => (
-  <div className="" key={index}>
-      <VideoCard index={index} video={video} />
-  </div>
-))}
+        {videos?.map((video, index) => (
+          <div className="" key={index}>
+            <VideoCard index={index} video={video} />
+          </div>
+        ))}
       </div>
     </div>
   ) : (
     <div className="flex justify-center mt-[20vh]">
       <div className="flex flex-col items-center">
-      <FontAwesomeIcon 
-      className="text-5xl"
-      icon={faVideo} />
-      <h1 className="text-2xl font-semibold mt-4">No Videos Available</h1>
-      <p className="text-gray-200 mt-3">There are no videos here available. Please try to search some thing else.</p>
+        <FontAwesomeIcon className="text-5xl" icon={faVideo} />
+        <h1 className="text-2xl font-semibold mt-4">No Videos Available</h1>
+        <p className="text-gray-200 mt-3">
+          There are no videos here available. Please try to search something else.
+        </p>
       </div>
     </div>
   );

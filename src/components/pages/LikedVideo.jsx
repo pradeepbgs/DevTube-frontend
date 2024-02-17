@@ -1,30 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import VideoCard from '../videoComponents/VideoCard';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
+import VideoCard from '../videoComponents/VideoCard';
+import { addLikedVideos } from '../../utils/userSlice';
 
 const LikedVideo = () => {
-  const [likedVideos, setLikedVideos] = useState([]);
-  
+  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
+  const { userLikedVideos } = useSelector((state) => state.user);
+
   const fetchLikedVideos = async () => {
     try {
-      const response = await axios.get(`/api/v1/likes/videos`, { withCredentials: true });
-      setLikedVideos(response?.data?.data);
+      const response = await axios.get('/api/v1/likes/videos', { withCredentials: true });
+      if (response?.data?.data) {
+        dispatch(addLikedVideos(response?.data?.data));
+        setIsLoading(true);
+      }
     } catch (error) {
       console.error('Error fetching liked videos:', error);
     }
   };
 
   useEffect(() => {
-    fetchLikedVideos();
-  }, []);
-
-  console.log(likedVideos);
+    if (!userLikedVideos) {
+      fetchLikedVideos();
+    }
+  }, [userLikedVideos]);
 
   return (
     <div className='text-white flex flex-wrap'>
-      {likedVideos?.map((video,index) => (
-        <div key={index} className='flex'>
-        <VideoCard video={video} />
+      {userLikedVideos?.map((video, index) => (
+        <div key={index}>
+          <VideoCard video={video} />
         </div>
       ))}
     </div>
