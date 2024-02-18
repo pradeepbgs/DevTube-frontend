@@ -23,6 +23,7 @@ import Editinfo from './components/pages/channelEdit/Editinfo.jsx';
 import PersonalDetails from './components/pages/channelEdit/PersonalDetails.jsx';
 import ChannelDetails from './components/pages/channelEdit/ChannelDetails.jsx';
 import ChangePassword from './components/pages/channelEdit/ChangePassword.jsx';
+import Upload from './components/upload/Upload.jsx';
 
 const router  = createBrowserRouter([
       {
@@ -62,7 +63,7 @@ const router  = createBrowserRouter([
             )
           },
           {
-            path: '/results',
+            path: '/results/:query',
             element: (
               <Suspense fallback={<Loader/>}>
                 <VideoListingPage/>
@@ -134,6 +135,14 @@ const router  = createBrowserRouter([
             element: (
               <Suspense fallback={<Loader/>}>
                 <ChannelPlaylistVideo/>
+              </Suspense>
+            )
+          },
+          {
+            path: "/channel/:channelId/upload",
+            element: (
+              <Suspense fallback={<Loader/>}>
+                <Upload/>
               </Suspense>
             )
           },

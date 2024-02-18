@@ -25,6 +25,9 @@ const toggleSlice = createSlice({
         showUserIcon: (state) => {
             state.userIcon = !state.userIcon
         },
+        showUserIconFalse: (state) => {
+            state.userIcon = false;
+        },
         showUploadPage: (state, action) => {
             state.uploadPage = action.payload;
         }
@@ -39,5 +42,6 @@ export const {
     toggleMenuTrue ,
     showUserIcon,
     showUploadPage,
+    showUserIconFalse
 } = toggleSlice.actions;
 export default toggleSlice.reducer;

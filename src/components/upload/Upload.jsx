@@ -1,8 +1,8 @@
 import React,{useState} from 'react';
 import { useDispatch } from 'react-redux';
-import { showUploadPage } from '../../../utils/toggleSlice';
+import { showUploadPage } from '../../utils/toggleSlice';
 import axios from 'axios';
-import RollingSVG from '../../../assets/Rolling-2.6s-24px (1).svg';
+import RollingSVG from '../../assets/Rolling-2.6s-24px (1).svg';
 
 
 const UploadPage = () => {
@@ -41,7 +41,7 @@ const UploadPage = () => {
   };
 
   return (
-    <div className=''>
+    <div className='absolute top-[30%] right-[30%] bg-purple-500 w-[40vw] h-fit px-10 py-10 rounded-md '>
       <form encType="multipart/form-data" onSubmit={handleVideoUpload} >
         <label htmlFor="">Title</label>
         <input
