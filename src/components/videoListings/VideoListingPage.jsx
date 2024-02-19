@@ -1,39 +1,52 @@
-import React, { useEffect, useState } from 'react'
-import VideoListings from './VideoListings';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-
+import VideoListings from './VideoListings';
 
 const VideoListingPage = () => {
-  const [Video, setVideo] = useState([])
-  const {query} = useParams()
-  
-  const getVideo = async () => {
-    const res = await axios.get(`/api/v1/videos?query=${query}`, {withCredentials: true})
-    if(res?.data?.data){
-      setVideo(res?.data?.data)
+  const [videos, setVideos] = useState([]);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(true);
+  const { query } = useParams();
+
+  const fetchVideos = async () => {
+    try {
+      const response = await axios.get(`/api/v1/videos?query=${query}`, { withCredentials: true });
+      if (response.data.data && response.data.data.length > 0) {
+        setVideos(response.data.data);
+      } else {
+        setError("No videos found");
+      }
+    } catch (error) {
+      setError("An error occurred while fetching videos");
+    } finally {
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    getVideo()
-  },[query])
-
+    fetchVideos();
+  }, [query]);
 
   return (
     <div>
-        {
-          Video?.map((video, index) => (
-            <div className="" key={index}>
-              <VideoListings 
-              key={index} 
-              showVideoDescription={false}
-              video={video}/>
-            </div>
-          ))
-        }
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <div>
+          {error ? (
+            <p className='text-red-400'>{error}</p>
+          ) : (
+            videos.map((video) => (
+              <div className="" key={video._id}>
+                <VideoListings key={video._id} showVideoDescription={false} video={video} />
+              </div>
+            ))
+          )}
+        </div>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default VideoListingPage
+export default VideoListingPage;

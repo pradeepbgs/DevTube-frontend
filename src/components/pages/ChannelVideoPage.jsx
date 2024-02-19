@@ -7,7 +7,6 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { addVideo } from '../../utils/userSlice';
 import axios from 'axios';
-import UploadPage from './uploadPage/UploadPage';
 
 
 

@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 
 const VideoListings = ({
-  imgWidth = "w-[20vw]",
-  imgHeight = "h-[25vh]",
+  imgWidth = "w-[18vw]",
+  imgHeight = "h-[10vw]",
   mainDIvWidth = "w-screen",
   titleWidth = "w-[65%]",
   titleSize = "text-[1.2rem]",
@@ -27,11 +27,11 @@ const VideoListings = ({
               to={`/watchpage/${video?._id}`}
             >
             <img 
-            className={`${imgWidth} ${imgHeight}`}
+            className={`${imgWidth} ${imgHeight} rounded-md shadow-lg shadow-cyan-50/50`}
             src={video?.thumbnail} alt="" />
             </Link>
           </div>
-          <div className="ml-2 w-[37%]">
+          <div className="ml-3 w-[37%]">
             <h1 className={`${titleFont} ${titleWidth} ${titleSize}`}>{video?.title}</h1>
             <p className="mb-1">200k • views</p>
             <div className="flex items-center mb-2">
