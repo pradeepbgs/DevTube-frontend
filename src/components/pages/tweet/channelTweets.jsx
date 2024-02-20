@@ -1,81 +1,65 @@
 import axios from 'axios';
-import  {useEffect, useState} from 'react'
-import {  FaTwitter } from 'react-icons/fa';
+import { useEffect, useState } from 'react';
+import { FaTwitter } from 'react-icons/fa';
 import TweetCard from './TweetCard';
 import { getUserTweets } from '../../../useHooks/getUserTweets';
 import { useDispatch, useSelector } from 'react-redux';
 
 const ChannelTweets = () => {
-  const [isTr, setIstr] = useState(false)
-  const [IsLoading, setIsLoading] = useState(false)
-  const [tweet, setTweet] = useState('')
-  const dispatch = useDispatch()
-  const {user, userTweets} = useSelector(state => state.user)
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [tweet, setTweet] = useState('');
+  const dispatch = useDispatch();
+  const { user, userTweets } = useSelector((state) => state.user);
 
   const handleAddTweet = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      const res = await axios
-      .post(`/api/v1/tweets`,{content: tweet}, {withCredentials: true})
-      if(res?.data){
-        setTweet('')
-        setIsLoading(true)
+      const res = await axios.post(`/api/v1/tweets`, { content: tweet }, { withCredentials: true });
+      if (res?.data) {
+        setTweet('');
+        setIsLoading(true);
       }
     } catch (error) {
-      console.log(error);
+      console.error('Error adding tweet:', error);
     }
-  }
+  };
 
   useEffect(() => {
-    if(user){
-      getUserTweets(dispatch, user?._id)
+    if (user && !userTweets) {
+      getUserTweets(dispatch, user?._id);
     }
-  },[user, IsLoading])
+  }, [user, dispatch, userTweets]);
 
-  useEffect(() => {
-    if(userTweets?.userTweets?.length > 0){
-      setIstr(true)
-    }
-  },[userTweets, isTr])
-
-  return  isTr ? (
+  return (
     <div>
-      <form 
-      onSubmit={handleAddTweet}
-      action="" className='mb-3 border border-t-0 border-l-0 border-r-0 py-3'>
-      <textarea 
-        className='bg-transparent border'
-        placeholder='Write something'
-        value={tweet}
-        onChange={(e) => setTweet(e.target.value)}
-        name="content" id="" cols="60" rows="2"
-      >
-      </textarea>
-      <button type='submit'>Tweet</button>
-    </form>
+      <form onSubmit={handleAddTweet} action="" className='mb-3 border border-t-0 border-l-0 border-r-0 py-3'>
+        <textarea
+          className='bg-transparent border'
+          placeholder='Write something'
+          value={tweet}
+          onChange={(e) => setTweet(e.target.value)}
+          name="content" id="" cols="60" rows="2"
+        >
+        </textarea>
+        <button type='submit'>Tweet</button>
+      </form>
       {
-        userTweets?.userTweets?.map((tweet) => (
-          <div key={tweet?._id} className='border border-l-0 border-r-0 border-t-0 pb-4'>
-            <TweetCard tweet={tweet} user={user}/>
+        userTweets?.userTweets?.length > 0 ? (
+          userTweets.userTweets.map((tweet) => (
+            <div key={tweet?._id} className='border border-l-0 border-r-0 border-t-0 pb-4'>
+              <TweetCard tweet={tweet} user={user} />
+            </div>
+          ))
+        ) : (
+          <div className='flex flex-col items-center w-full mt-5'>
+            <FaTwitter size={50} />
+            <h1 className='font-bold'>No Tweets</h1>
+            <p className='font-semibold'>This channel has yet to make a Tweet.</p>
           </div>
-        ))
+        )
       }
     </div>
-  ) : <div className='flex flex-col items-center w-full mt-5'>
-    <form action="" className='mb-3'>
-      <textarea 
-      className='bg-transparent border'
-      placeholder='Write something'
-      name="" id="" cols="60" rows="2">
+  );
+};
 
-      </textarea>
-      <button type='submit'>Tweet</button>
-    </form>
-        <FaTwitter size={50} />
-        <h1 className='font-bold'>No Tweets</h1>
-        <p className='font-semiboold'>This channel has yet to make a Tweet.</p>
-     </div>
-}
-
-export default ChannelTweets
+export default ChannelTweets;
