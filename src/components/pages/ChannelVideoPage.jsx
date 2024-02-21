@@ -31,12 +31,13 @@ const ChannelVideoPage = () => {
     }
   }, [user]);
 
+
   return userVideo?.length > 0 ? (
     <div className=''>
       <div className='text-white flex mt-1 flex-wrap'>
         {userVideo?.map((video, index) => (
           <div key={index}>
-            <Link to={`/watchpage/${video?._id}`}><VideoCard video={video} /></Link>
+           <VideoCard video={video} />
           </div>
         ))}
       </div>
