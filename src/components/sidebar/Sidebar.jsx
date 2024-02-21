@@ -55,14 +55,17 @@ const Sidebar = () => {
 
   return (
   
-    <div className={`'bg-black text-white h-full  flex-col hidden md:flex border border-y-0 border-l-0 '`}>
-      <ul className='flex-grow px-2 py-3 '>
+    <div className={`'bg-black text-white h-full  flex-col hidden md:flex border border-y-0 border-l-0 transorm transition-all duration-400'`}>
+      <ul className='flex-grow px-2 py-3'>
         {items.map((item, index) => (
           <NavLink 
           className={({isActive}) => `${isActive? "text-purple-400" : "text-gray-200"}`}
           to={item.link} key={index}>
           <li
-            className='py-2 px-5 hover:bg-purple-400 hover:text-black w-[100%] mb-4 cursor-pointer flex items-center border'
+            className='py-2 px-5 hover:bg-purple-400 
+             transform transition-all duration-100
+            hover:text-black w-[100%] mb-4 cursor-pointer 
+            flex items-center border rounded-sm'
           >
             {item.icon && <span className='mr-2'>{item.icon}</span>}
             {item.name}
