@@ -6,6 +6,7 @@ import {login} from '../../utils/authSlice'
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  const [error, setError] = useState('')
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -14,10 +15,10 @@ const Login = () => {
 
   const loginSubmit = async (e) => {
     e.preventDefault();
-    
+  
     try {
       const response = await axios.post(
-        "https://video-backend-3ot2.onrender.com/api/v1/users/login",
+        "/api/v1/users/login",
         {
           email,
           password,
@@ -26,18 +27,16 @@ const Login = () => {
           withCredentials: true,
         }
       );
-      if(response){
-        console.log(response)
-        const {user} = response.data.data
-        localStorage.setItem('user',JSON.stringify(user))
-        navigate('/')
-        dispatch(login(response.data.data.user))
-      }
+      
+      const { user } = response.data.data;
+      localStorage.setItem('user', JSON.stringify(user));
+      navigate('/');
+      dispatch(login(user));
     } catch (error) {
-      console.log(error+"error in login.jsx");
+      setError(error?.response?.data?.message);
     }
-
   };
+  
 
 
 
@@ -49,6 +48,7 @@ const Login = () => {
       rounded-md bg-opacity-10"
       >
         <div className="text-center">
+        {error && <h1 className='text-red-400 text-xl'>{error}</h1>}
           <h1 className="text-2xl mb-2 font-semibold">Login</h1>
           <form
             action=""
