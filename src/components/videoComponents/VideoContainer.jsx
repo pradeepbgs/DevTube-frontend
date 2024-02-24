@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import VideoCard from "./VideoCard";
 import { toggleMenuTrue } from "../../utils/toggleSlice";
 import { addVideos } from "../../utils/videos.slice";
@@ -7,45 +7,29 @@ import { faVideo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 
-// Custom hook for fetching videos
-const useFetchVideos = () => {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const dispatch = useDispatch();
-
-  const fetchVideos = async () => {
-    try {
-      const response = await axios.get("/api/v1/videos", { withCredentials: true });
-      if (response?.data?.data?.length >  0) {
-        dispatch(addVideos(response?.data?.data));
-      }
-    } catch (error) {
-      setError(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return { loading, error, fetchVideos };
-};
-
 const VideoContainer = () => {
   const dispatch = useDispatch();
   const { videos } = useSelector((state) => state.videos);
-  const { loading, error, fetchVideos } = useFetchVideos();
+
+  const getData = async () => {
+    try {
+      const response = await axios.get("/api/v1/videos", { withCredentials: true });
+      if (response?.data?.data?.length > 0) {
+        dispatch(addVideos(response?.data?.data));
+      }
+    } catch (error) {
+      // console.error("Error fetching videos:", error);
+    }
+  };
 
   useEffect(() => {
     dispatch(toggleMenuTrue());
     if (!videos) {
-      fetchVideos();
+      getData();
     }
-  }, [videos, dispatch, fetchVideos]);
+  }, [videos]);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
-
-  // Check if videos array is empty
-  if (Array.isArray(videos) && videos.length ===  0) {
+  if(!videos || videos?.length === 0 ){
     return (
       <div className="flex justify-center mt-[20vh]">
         <div className="flex flex-col items-center">
@@ -62,14 +46,14 @@ const VideoContainer = () => {
   return (
     <div className="overflow-hidden mt-5">
       <div className="flex flex-wrap md:ml-2">
-        {videos?.map((video) => (
-          <div className="" key={video._id}> 
-            <VideoCard video={video} />
+        {videos?.map((video, index) => (
+          <div className="" key={video?._id ?? index}>
+            <VideoCard index={index} video={video} />
           </div>
         ))}
       </div>
     </div>
-  );
+  ) 
 };
 
 export default VideoContainer;
