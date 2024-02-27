@@ -50,9 +50,9 @@ const Header = () => {
               </button>
             </div>
             <div>
-              <form onSubmit={formHandler} className="flex items-center">
+              <form onSubmit={formHandler} className="flex items-center border border-gray-400">
                 <label
-                  className="border border-gray-500 px-2 py-3 border-r-0"
+                  className=" px-2 py-3 border-r-0 rounded-md"
                   htmlFor=""
                 >
                   <FaSearch />
@@ -61,12 +61,14 @@ const Header = () => {
                   type="text"
                   placeholder="Search"
                   name="search" // Add the name attribute
-                  className="bg-black text-white w-[26vw] border border-l-0 border-gray-500 px-3 py-2 focus:outline-none"
+                  className="bg-black text-white w-[26vw]  px-3 py-2 focus:outline-none"
                 />
 
                 <button
                   type="submit"
-                  className="bg-black text-white px-3 py-2 ml-2 border border-gray-500 focus:outline-none"
+                  className="bg-black text-white px-4 py-2 ml-2 border 
+                  hover:bg-gray-600
+                  border-gray-400 border-r-0 border-b-0 border-t-0 focus:outline-none"
                 >
                   Search
                 </button>
