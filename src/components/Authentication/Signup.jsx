@@ -45,12 +45,10 @@ const Signup = () => {
       }
     )
 
-    console.log(`this is response ${res}`)
     navigate('/login');
    } catch (error) {
     setError(error?.response?.data?.message);
    }
-    // console.log(formData);
   };
 
   return (
@@ -61,10 +59,20 @@ const Signup = () => {
       >
         <div className="text-center">
           <h1 className="text-2xl mb-2 font-semibold">Register</h1>
+          {error && <h1 className='text-red-400 text-xl'>{error}</h1>}
           <form
             onSubmit={handleSubmit}
             className="flex flex-col w-fit mb-3 mt-5"
           >
+            Avatar*
+            <input
+              type="file"
+              name="avatar"
+              className="bg-gray-800 px-5 py-3 mb-4 rounded-md"
+              required='true'
+              onChange={handleChange}
+            />
+
             <input
               type="text"
               name="username"
@@ -98,13 +106,7 @@ const Signup = () => {
               value={formData.password}
               onChange={handleChange}
             />
-            Avatar
-            <input
-              type="file"
-              name="avatar"
-              className="bg-gray-800 px-5 py-3 mb-4 rounded-md"
-              onChange={handleChange}
-            />
+            
             coverImage
             <input
               type="file"
