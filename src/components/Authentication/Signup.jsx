@@ -3,17 +3,17 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
-  const [error, setError] = useState('')
+  const [error, setError] = useState('');
   const [formData, setFormData] = useState({
     username: '',
-    fullname:'',
+    fullname: '',
     email: '',
     password: '',
     avatar: null,
     coverImage: null,
   });
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -36,95 +36,113 @@ const Signup = () => {
     if (formData.coverImage) {
       data.append('coverImage', formData.coverImage);
     }
-   try {
-    const res = await axios.post(
-      "/api/v1/users/register",
-      data,
-      {
-        withCredentials: true
-      }
-    )
-
-    navigate('/login');
-   } catch (error) {
-    setError(error?.response?.data?.message);
-   }
+    try {
+      await axios.post('/api/v1/users/register', data, {
+        withCredentials: true,
+      });
+      navigate('/login');
+    } catch (error) {
+      setError(error?.response?.data?.message);
+    }
   };
 
   return (
-    <div className="text-white w-screen h-full flex justify-center items-center">
-      <div
-        className="bg-blue-300 w-[40vw] h-[80vh] flex justify-center 
-      items-center rounded-lg bg-opacity-10"
-      >
-        <div className="text-center">
-          <h1 className="text-2xl mb-2 font-semibold">Register</h1>
-          {error && <h1 className='text-red-400 text-xl'>{error}</h1>}
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col w-fit mb-3 mt-5"
-          >
-            Avatar*
-            <input
-              type="file"
-              name="avatar"
-              className="bg-gray-800 px-5 py-3 mb-4 rounded-md"
-              required='true'
-              onChange={handleChange}
-            />
-
-            <input
-              type="text"
-              name="username"
-              className="bg-gray-800 w-[30vw] px-5 mb-4 py-3 rounded-md"
-              placeholder="Enter your username"
-              value={formData.username}
-              onChange={handleChange}
-            />
-            <input 
-            type="text" 
-            name="fullname" 
-            className="bg-gray-800 w-[30vw] px-5 mb-4 py-3 rounded-md"
-            value={formData.fullname}
-            onChange={handleChange}
-            placeholder='Enter your Fullname'
-            id="" />
-
-            <input
-              type="text"
-              name="email"
-              className="bg-gray-800 px-5 mb-4 py-3 rounded-md"
-              placeholder="Enter your email"
-              value={formData.email}
-              onChange={handleChange}
-            />
-            <input
-              type="password"
-              name="password"
-              className="bg-gray-800 px-5 py-3 mb-4 rounded-md"
-              placeholder="Enter your password"
-              value={formData.password}
-              onChange={handleChange}
-            />
-            
-            coverImage
+    <div className="flex justify-center items-center min-h-screen bg-black">
+      <div className="bg-gray-900 opacity-80 p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h1 className="text-3xl font-bold text-white mb-6 text-center">Register</h1>
+        {error && <p className="text-red-500 mb-4">{error}</p>}
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <div className="relative mb-4">
             <input
               type="file"
               name="coverImage"
-              className="bg-gray-800 px-5 py-3 mb-4 rounded-md"
+              accept="image/*"
+              className="absolute w-full h-48 rounded-t-lg object-cover opacity-0 cursor-pointer"
               onChange={handleChange}
+              required
             />
-            <button
-              type="submit"
-              className="bg-blue-500 px-5 py-3 rounded-md"
-            >
-              Register
-            </button>
-          </form>
-          <span className="hover:text-blue-400 hover:underline">
-            <a href="/login">Already a user? Login</a>
-          </span>
-        </div>
+            <div className="w-full h-48 bg-gray-200 rounded-md flex justify-center items-center overflow-hidden">
+              {formData.coverImage ? (
+                <img
+                  src={URL.createObjectURL(formData.coverImage)}
+                  alt="Cover Preview"
+                  className="w-full h-full object-cover rounded-md"
+                />
+              ) : (
+                <span className="text-gray-500">Upload Cover Image</span>
+              )}
+            </div>
+          </div>
+          <div className="relative w-24 h-24 mx-auto mb-4">
+            <input
+              type="file"
+              name="avatar"
+              accept="image/*"
+              className="absolute w-full h-full rounded-full object-cover opacity-0 cursor-pointer"
+              onChange={handleChange}
+              required
+            />
+            <div className="w-full h-full bg-gray-200 rounded-full flex justify-center items-center overflow-hidden">
+              {formData.avatar ? (
+                <img
+                  src={URL.createObjectURL(formData.avatar)}
+                  alt="Avatar Preview"
+                  className="w-full h-full rounded-full object-cover"
+                />
+              ) : (
+                <span className="text-gray-500">Upload Avatar</span>
+              )}
+            </div>
+          </div>
+          <input
+            type="text"
+            name="username"
+            className="bg-gray-100 px-4 py-2 rounded-md text-gray-800"
+            placeholder="Enter your username"
+            value={formData.username}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="text"
+            name="fullname"
+            className="bg-gray-100 px-4 py-2 rounded-md text-gray-800"
+            placeholder="Enter your full name"
+            value={formData.fullname}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="email"
+            name="email"
+            className="bg-gray-100 px-4 py-2 rounded-md text-gray-800"
+            placeholder="Enter your email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            className="bg-gray-100 px-4 py-2 rounded-md text-gray-800"
+            placeholder="Enter your password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+          <button
+            type="submit"
+            className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors"
+          >
+            Register
+          </button>
+        </form>
+        <p className="text-gray-300 text-center mt-4">
+          Already a user?{' '}
+          <a href="/login" className="text-indigo-600 hover:underline">
+            Login
+          </a>
+        </p>
       </div>
     </div>
   );
