@@ -5,10 +5,10 @@ import { setComments } from "../../utils/videoSlice";
 import { useParams } from "react-router-dom";
 import { useComment } from "../../useHooks/useComment";
 import { MdMoreVert } from "react-icons/md";
-import { getTimeElapsed } from "../../utils/getCreatedTime";
+import { getTimeElapsed } from "../../utils/getTimeAGo";
 
 const CommentPage = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [makeApiForComment, setMakeApiForComment] = useState(false);
   const [isBtn, setIsBtn] = useState(false);
   const [isComment, setIsComment] = useState("");
   const [isUpdatable, setIsUpdatable] = useState(false);
@@ -27,6 +27,7 @@ const CommentPage = () => {
       );
       if (response) {
         const comments = response.data.data;
+        console.log(comments)
         dispatch(setComments(comments));
       }
     } catch (error) {
@@ -36,22 +37,22 @@ const CommentPage = () => {
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault()
-    const res = useComment(isComment, videoId);
+    const res = await useComment(isComment, videoId);
     if (res) {
-      setIsLoading((prev) => !prev)
+      setMakeApiForComment((prev) => !prev)
       setIsComment("")
     }
   };
 
-  const handleDeleteComment = (commentId) => {
+  const handleDeleteComment = async (commentId) => {
     if (commentId?.owner?._id === user?._id) {
-      const res = axios.delete(
+      const res = await axios.delete(
         `/api/v1/comments/c/${commentId?._id}`,
         { withCredentials: true }
       );
 
       if (res) {
-        setIsLoading((prev) => !prev)
+        setMakeApiForComment((prev) => !prev)
         setIsBtn(false)
       }
     } else {
@@ -61,7 +62,7 @@ const CommentPage = () => {
 
   const handleUpdateComment = (commentId) => {
     const res = axios.put(
-      `http://localhost:3000/api/v1/comments/c/${commentId?.id}`,
+      `/api/v1/comments/c/${commentId?.id}`,
       {
         content: isComment,
       },
@@ -76,7 +77,7 @@ const CommentPage = () => {
 
   useEffect(() => {
     getVideoComments()
-  }, [isLoading])
+  }, [makeApiForComment])
 
 
   return (
