@@ -12,6 +12,7 @@ const CommentPage = () => {
   const [isBtn, setIsBtn] = useState(false);
   const [isComment, setIsComment] = useState("");
   const [isUpdatable, setIsUpdatable] = useState(false);
+  const [selectedCommentId, setSelectedCommentId] = useState(null);
   const dispatch = useDispatch();
   const { videoId } = useParams();
 
@@ -60,8 +61,8 @@ const CommentPage = () => {
     }
   };
 
-  const handleUpdateComment = (commentId) => {
-    const res = axios.put(
+  const handleUpdateComment = async (commentId) => {
+    const res = await axios.put(
       `/api/v1/comments/c/${commentId?.id}`,
       {
         content: isComment,
@@ -73,13 +74,17 @@ const CommentPage = () => {
     }
   };
 
+  const handleMoreOptionClicks = (commentId) => {
+   setSelectedCommentId(commentId)
+   setIsBtn((prev) => !prev)
+  }
 
 
   useEffect(() => {
     getVideoComments()
   }, [makeApiForComment])
 
-
+console.log(comments)
   return (
     <>
       <div className="border rounded-md mt-3">
@@ -145,7 +150,7 @@ const CommentPage = () => {
               <div className="flex">
                 {user?._id === items?.owner?._id && (
                   <div className=" h-fit w-fit mr-5 flex">
-                    {isBtn && !isUpdatable && (
+                    {isBtn && selectedCommentId === items?._id && !isUpdatable && (
                       <>
                         <button
                           onClick={() => setIsUpdatable(true)}
@@ -160,12 +165,15 @@ const CommentPage = () => {
                     )}
                   </div>
                 )}
-                {user?._id === items?.owner?._id && <div
+                {
+                user?._id === items?.owner?._id && 
+                <div
                   className="cursor-pointer"
-                  onClick={() => setIsBtn((prev) => !prev)}
+                  onClick={() => handleMoreOptionClicks(items?._id)}
                 >
                   <MdMoreVert />
-                </div>}
+                </div>
+                }
               </div>
             </div>
           ))}
