@@ -3,13 +3,14 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { getCurrentUser } from '../../../useHooks/getCurrenttUser'
+import {updateUser} from '../../../utils/authSlice'
 
 const PersonalDetails = () => {
-  const { user, currentUser } = useSelector(state => state.user)
+  const {currentUser } = useSelector(state => state.user)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
   const handleUpdate = async (e) => {
@@ -19,11 +20,13 @@ const PersonalDetails = () => {
       const res = await axios.patch(`/api/v1/users/update-account-details`,
         {
           fullname: name,
-          email: email,
+          username: username,
         },
         { withCredentials: true })
+        console.log(res)
       if (res.data.statusCode === 200) {
-        navigate(`/channel/${user?.username}`)
+        dispatch(updateUser(res.data.data));
+        navigate(`/channel/${res.data.data.username}`);
       }
       setIsLoading(false)
     } catch (error) {
@@ -36,7 +39,7 @@ const PersonalDetails = () => {
       getCurrentUser(dispatch)
     } else {
       setName(currentUser.fullname)
-      setEmail(currentUser.email)
+      setUsername(currentUser.username)
     }
   }, [currentUser, dispatch])
 
@@ -47,22 +50,22 @@ const PersonalDetails = () => {
           onSubmit={handleUpdate}
           className='flex flex-col mt-10'
           action="">
-          <label htmlFor="">Full Name:</label>
+          <label htmlFor="">Username:</label>
           <input
             className='w-[30vw] mb-5 py-1 px-5 rounded-md border bg-transparent'
             type="text"
-            onChange={(e) => setName(e.target.value)}
-            value={name}
-            name='fullname'
+            onChange={(e) => setUsername(e.target.value)}
+            value={username}
+            name='username'
             placeholder='full name' />
-          <label htmlFor="">Email:</label>
+          <label htmlFor="">FullName:</label>
           <input
             className='py-1 px-5 rounded-md border bg-transparent'
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            name="email"
-            placeholder="email" />
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            name="fullname"
+            placeholder="full name" />
           <button className='mt-5 px-6 border'>{isLoading ? "UPDATING" : "SAVE"}</button>
         </form>
       </div>
