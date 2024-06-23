@@ -5,7 +5,7 @@ import { setComments } from "../../utils/videoSlice";
 import { useParams } from "react-router-dom";
 import { useComment } from "../../useHooks/useComment";
 import { MdMoreVert } from "react-icons/md";
-import { getTimeElapsed } from "../../utils/getTimeAGo";
+import { getTimeElapsed } from "../../utils/getCreatedTime";
 
 const CommentPage = () => {
   const [makeApiForComment, setMakeApiForComment] = useState(false);
@@ -28,7 +28,6 @@ const CommentPage = () => {
       );
       if (response) {
         const comments = response.data.data;
-        console.log(comments)
         dispatch(setComments(comments));
       }
     } catch (error) {
@@ -84,7 +83,6 @@ const CommentPage = () => {
     getVideoComments()
   }, [makeApiForComment])
 
-console.log(comments)
   return (
     <>
       <div className="border rounded-md mt-3">
