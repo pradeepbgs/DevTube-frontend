@@ -14,7 +14,7 @@ const ChannelTweets = () => {
   const handleAddTweet = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`/api/v1/tweets`, { content: tweet }, { withCredentials: true });
+      const res = await axios.post(`https://video-backend-3ot2.onrender.com/api/v1/tweets`, { content: tweet }, { withCredentials: true });
       if (res?.data) {
         setTweet('');
         setIsLoading(true);

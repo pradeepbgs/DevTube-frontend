@@ -11,7 +11,7 @@ const LikedVideo = () => {
 
   const fetchLikedVideos = async () => {
     try {
-      const response = await axios.get('/api/v1/likes/videos', { withCredentials: true });
+      const response = await axios.get('https://video-backend-3ot2.onrender.com/api/v1/likes/videos', { withCredentials: true });
       if (response?.data?.data) {
         dispatch(addLikedVideos(response?.data?.data));
         setIsLoading(true);

@@ -23,7 +23,7 @@ const CommentPage = () => {
   const getVideoComments = async () => {
     try {
       const response = await axios.get(
-        `/api/v1/comments/${videoId}`,
+        `https://video-backend-3ot2.onrender.com/api/v1/comments/${videoId}`,
         { withCredentials: true }
       );
       if (response) {
@@ -47,7 +47,7 @@ const CommentPage = () => {
   const handleDeleteComment = async (commentId) => {
     if (commentId?.owner?._id === user?._id) {
       const res = await axios.delete(
-        `/api/v1/comments/c/${commentId?._id}`,
+        `https://video-backend-3ot2.onrender.com/api/v1/comments/c/${commentId?._id}`,
         { withCredentials: true }
       );
 
@@ -62,7 +62,7 @@ const CommentPage = () => {
 
   const handleUpdateComment = async (commentId) => {
     const res = await axios.put(
-      `/api/v1/comments/c/${commentId?.id}`,
+      `https://video-backend-3ot2.onrender.com/api/v1/comments/c/${commentId?.id}`,
       {
         content: isComment,
       },

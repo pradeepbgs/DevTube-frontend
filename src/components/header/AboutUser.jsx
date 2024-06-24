@@ -14,7 +14,7 @@ const AboutUser = ({user}) => {
 
     const logoutUser = async () => {
         try {
-          await axios.post("/api/v1/users/logout", null, {
+          await axios.post("https://video-backend-3ot2.onrender.com/api/v1/users/logout", null, {
             withCredentials: true,
           });
           dispatch(logout());

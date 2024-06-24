@@ -52,7 +52,7 @@ const Watchpage = () => {
 
   const getVideoDetails = async () => {
     try {
-      const response = await axios.get(`/api/v1/videos/${videoId}`, {
+      const response = await axios.get(`https://video-backend-3ot2.onrender.com/api/v1/videos/${videoId}`, {
         withCredentials: true,
       });
 

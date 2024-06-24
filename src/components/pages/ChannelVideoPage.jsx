@@ -14,7 +14,7 @@ const ChannelVideoPage = () => {
   const getUserVideos = async () => {
     try {
       const res = await axios.get(
-        `/api/v1/videos/c/${user?._id}`,
+        `https://video-backend-3ot2.onrender.com/api/v1/videos/c/${user?._id}`,
         { withCredentials: true }
       );
       if (res) {

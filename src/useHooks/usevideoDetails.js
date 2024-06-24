@@ -9,8 +9,8 @@ const useVideoDetails = (videoId) => {
 
   const getVideoDetails = async () => {
     try {
-      const response = await axios.get(`/api/v1/videos/${videoId}`, { withCredentials: true });
-
+      const response = await axios.get(`https://video-backend-3ot2.onrender.com/api/v1/videos/${videoId}`, { withCredentials: true });
+      console.log(response)
       if (response) {
         const video = response.data.data;
         dispatch(setVideo({ ...video, owner: '', comments: '' }));
@@ -35,7 +35,7 @@ const useVideoComments = async (videoId) => {
 
   const getVideoComments = async () => {
     try {
-      const response = await axios.get(`/api/v1/comments/${videoId}`, { withCredentials: true });
+      const response = await axios.get(`https://video-backend-3ot2.onrender.com/api/v1/comments/${videoId}`, { withCredentials: true });
       if (response) {
         const comments = response.data.data;
         dispatch(setComments(comments));

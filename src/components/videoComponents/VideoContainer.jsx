@@ -13,7 +13,7 @@ const VideoContainer = () => {
 
   const getData = async () => {
     try {
-      const response = await axios.get("/api/v1/videos", { withCredentials: true });
+      const response = await axios.get("https://video-backend-3ot2.onrender.com/api/v1/videos", { withCredentials: true });
       if (response?.data?.data?.length > 0) {
         dispatch(addVideos(response?.data?.data));
       }

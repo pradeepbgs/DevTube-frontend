@@ -37,7 +37,7 @@ const Signup = () => {
       data.append('coverImage', formData.coverImage);
     }
     try {
-      await axios.post('/api/v1/users/register', data, {
+      await axios.post('https://video-backend-3ot2.onrender.com/api/v1/users/register', data, {
         withCredentials: true,
       });
       navigate('/login');
