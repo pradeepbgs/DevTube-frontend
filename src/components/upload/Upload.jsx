@@ -4,10 +4,8 @@ import { showUploadPage } from '../../utils/toggleSlice';
 import axios from 'axios';
 import RollingSVG from '../../assets/Rolling-2.6s-24px (1).svg';
 
-
 const UploadPage = () => {
   const [loading, setLoading] = useState(false);
-
   const dispatch = useDispatch();
 
   const handleVideoUpload = async (e) => {
@@ -28,9 +26,9 @@ const UploadPage = () => {
         },
       });
 
-      if(res.data.statusCode === 201){
-        dispatch(showUploadPage(false));
-      }
+      if(res?.data?.data){
+        navigate(`/`)
+     }
 
     } catch (error) {
       console.error('Error:', error);
