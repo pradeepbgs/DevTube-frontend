@@ -3,10 +3,12 @@ import { useDispatch } from 'react-redux';
 import { showUploadPage } from '../../utils/toggleSlice';
 import axios from 'axios';
 import RollingSVG from '../../assets/Rolling-2.6s-24px (1).svg';
+import { useNavigate } from 'react-router-dom';
 
 const UploadPage = () => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleVideoUpload = async (e) => {
     e.preventDefault();
